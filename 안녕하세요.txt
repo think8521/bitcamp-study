@@ -1,0 +1,18 @@
+안녕하세요
+System.out.println()
+내가 왜 적축을 샀지?
+성주님이 말을 안해줘서...
+그래그래 맞아
+
+
+
+
+
+
+show me the money 
+
+for(int i = 0; i < 1; i++){
+	System.out.println("내가왜 갈축을 안샀지?");
+	System.out.println("성주님이 말을안해줘서");
+
+}
