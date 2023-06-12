@@ -12,11 +12,10 @@ public class MemberHandler {
   // static String[] email = new String[MAX_SIZE];
   // static String[] password = new String[MAX_SIZE];
   // static char[] gender = new char[MAX_SIZE];
-  static int userId = 1;
+
   static int length = 0;
 
-  static final char MALE = 'M';
-  static final char FEMALE = 'W';
+
 
   public static void inputMember() {
     if (!available()) {
@@ -30,7 +29,6 @@ public class MemberHandler {
     m.setPassword(Prompt.inputString("암호? "));
     m.setGender(inputGender((char) 0));
 
-    m.setNo(userId++);
 
     // 위에서 만든 Member 인스턴스의 주소를 잃어버리지 않게
     // 레퍼런스 배열에 담는다.
@@ -100,9 +98,9 @@ public class MemberHandler {
 
       switch (menuNo) {
         case "1":
-          return MALE;
+          return Member.MALE;
         case "2":
-          return FEMALE;
+          return Member.FEMALE;
         default:
           System.out.println("무효한 번호입니다.");
       }
@@ -161,58 +159,4 @@ public class MemberHandler {
     return length < MAX_SIZE;
   }
 }
-// String memberNo = Prompt.inputString("번호? ");
-// // 입력 받은 번호를 가지고 배열에서 해당 회원을 찾아야 한다.
-// for (int i = 0; i < length; i++) {
-// if (no[i] == Integer.parseInt(memberNo) && i == length - 1) {
-// no[i] = 0;
-// } else if (no[i] == Integer.parseInt(memberNo)) {
-// for (i = 0; i < length; i++) {
-// if (i >= Integer.parseInt(memberNo)) {
-// no[i] = no[i - 1];
-// }
-// }
-// } else {
-// System.out.println("무효한 번호입니다.");
-// }
-// }
-// length--;
 
-// String str = Prompt.inputString("번호? ");
-// int number = Integer.parseInt(str) - 1;
-// if (length < number) {
-// System.out.println("해당 번호의 회원이 없습니다!");
-// return;
-// } else {
-// for (int i = 0; i < length;) {
-// if (no[i] == number) {
-// String oldname = name[i];
-// String oldemail = email[i];
-// char oldgender = gender[i];
-
-// name[i] = Prompt.inputString("이름(" + oldname + ")? ");
-// email[i] = Prompt.inputString("이메일(" + oldemail + ")? ");
-// password[i] = Prompt.inputString("새암호? ");
-
-// loop: while (true) {
-// String menuNo = Prompt.inputString("성별(" + toGenderString(oldgender) + ")?\n"
-// +
-// " 1. 남자\n" +
-// " 2. 여자\n" +
-// "> ");
-
-// switch (menuNo) {
-// case "1":
-// gender[i] = MALE;
-// break loop;
-// case "2":
-// gender[i] = FEMALE;
-// break loop;
-// default:
-// System.out.println("무효한 번호입니다.");
-// }
-// }
-// }
-// return;
-// }
-// }
