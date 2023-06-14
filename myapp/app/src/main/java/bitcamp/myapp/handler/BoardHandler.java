@@ -5,38 +5,42 @@ import bitcamp.util.Prompt;
 
 public class BoardHandler {
 
-  static final int MAX_SIZE = 100;
-  static Board[] boards = new Board[MAX_SIZE];
+  // 인스턴스에 상관없이 공통으로 사용하는 필드라면 스태틱 필드로 선언한다.
+  private static final int MAX_SIZE = 100;
 
+  // 인스턴스마다 별개로 관리해야 할 데이터라면 논스태틱 필드(인스턴스 필드)로 선언한다.
+  private Prompt prompt;
+  private Board[] boards = new Board[MAX_SIZE];
+  private int length = 0;
 
-  static int length = 0;
+  public BoardHandler(Prompt prompt) {
+    this.prompt = prompt;
+  }
 
-
-
-  public static void inputBoard() {
-    if (!available()) {
+  // 인스턴스 멤버(필드나 메서드)를 사용하는 경우 인스턴스 메서드로 정의해야 한다.
+  public void inputBoard() {
+    if (!this.available()) {
       System.out.println("더이상 입력할 수 없습니다!");
       return;
     }
 
     Board board = new Board();
-    board.setTitle(Prompt.inputString("제목? "));
-    board.setContent(Prompt.inputString("내용? "));
-    board.setWriter(Prompt.inputString("작성자? "));
-    board.setPassword(Prompt.inputString("암호? "));
+    board.setTitle(this.prompt.inputString("제목? "));
+    board.setContent(this.prompt.inputString("내용? "));
+    board.setWriter(this.prompt.inputString("작성자? "));
+    board.setPassword(this.prompt.inputString("암호? "));
 
-    boards[length++] = board;
+    this.boards[this.length++] = board;
   }
 
-  public static void printBoards() {
+  public void printBoards() {
     System.out.println("------------------------------------");
-
     System.out.println("번호, 제목, 작성자, 조회수, 등록일");
     System.out.println("------------------------------------");
 
 
-    for (int i = 0; i < length; i++) {
-      Board board = boards[i];
+    for (int i = 0; i < this.length; i++) {
+      Board board = this.boards[i];
 
       // 게시글의 등록일 값을 가져와서 Date 인스턴스에 저장한다.
       // Date date = new Date(board.getCreatedDate());
@@ -46,44 +50,44 @@ public class BoardHandler {
     }
   }
 
-  public static void viewBoard() {
-    String BoardNo = Prompt.inputString("번호? ");
+  public void viewBoard() {
+    String BoardNo = this.prompt.inputString("번호? ");
     // 입력 받은 번호를 가지고 배열에서 해당 회원을 찾아야 한다.
-    for (int i = 0; i < length; i++) {
-      Board board = boards[i];
+    for (int i = 0; i < this.length; i++) {
+      Board board = this.boards[i];
       if (board.getNo() == Integer.parseInt(BoardNo)) {
         // i 번째 항목에 저장된 회원 정보 출력
-        int view = board.getViewCount();
-        view++;
-        board.setViewCount(view);
+        // int view = board.getViewCount();
+        // view++;
         System.out.printf("제목: %s\n", board.getTitle());
+        System.out.printf("내용: %s\n", board.getContent());
         System.out.printf("작성자: %s\n", board.getWriter());
         System.out.printf("조회수: %s\n", board.getViewCount());
         System.out.printf("등록일: %tY-%1$tm-%1$td\n", board.getCreatedDate());
+        board.setViewCount(board.getViewCount() + 1);
         return;
       }
     }
     System.out.println("해당 번호의 게시글이 없습니다!");
   }
 
-  public static void updateBoard() {
-    String BoardNo = Prompt.inputString("번호? ");
+  public void updateBoard() {
+    String BoardNo = this.prompt.inputString("번호? ");
     // 입력 받은 번호를 가지고 배열에서 해당 회원을 찾아야 한다.
-    for (int i = 0; i < length; i++) {
-      Board board = boards[i];
+    for (int i = 0; i < this.length; i++) {
+      Board board = this.boards[i];
       if (board.getNo() == Integer.parseInt(BoardNo)) {
         // i 번째 항목에 저장된 회원 정보 출력
-        String BoardPassword = Prompt.inputString("암호? ");
-        if (board.getPassword().equals(BoardPassword)) {
-          System.out.printf("제목(%s)? ", board.getTitle());
-          board.setTitle(Prompt.inputString(""));
-          System.out.printf("내용(%s)? ", board.getContent());
-          board.setContent(Prompt.inputString(""));
-          return;
-        } else {
-          System.out.println("비밀번호가 틀렸습니다!");
+        // String BoardPassword = Prompt.inputString("암호? ");
+        if (!this.prompt.inputString("암호? ").equals(board.getPassword())) {
+          System.out.println("암호가 일치하지 않습니다!");
           return;
         }
+        // System.out.printf("제목(%s)? ", board.getTitle());
+        board.setTitle(this.prompt.inputString("제목(%s)? ", board.getTitle()));
+        // System.out.printf("내용(%s)? ", board.getContent());
+        board.setContent(this.prompt.inputString("내용(%s)? ", board.getContent()));
+        return;
       }
     }
     System.out.println("해당 번호의 게시글이 없습니다!");
@@ -91,26 +95,23 @@ public class BoardHandler {
 
 
 
-  public static void deleteBoard() {
-
-    int boardNo = Prompt.inputInt("번호? ");
-
-    int deletedIndex = indexOf(boardNo);
-
+  public void deleteBoard() {
+    // int boardNo = Prompt.inputInt("번호? ");
+    int deletedIndex = indexOf(this.prompt.inputInt("번호? "));
     if (deletedIndex == -1) {
       System.out.println("해당 번호의 게시글이 없습니다!");
       return;
     }
 
-    for (int i = deletedIndex; i < length - 1; i++) {
-      boards[i] = boards[i + 1];
+    for (int i = deletedIndex; i < this.length - 1; i++) {
+      this.boards[i] = this.boards[i + 1];
       // no[i] = no[i + 1];
       // name[i] = name[i + 1];
       // email[i] = email[i + 1];
       // password[i] = password[i + 1];
       // gender[i] = gender[i + 1];
     }
-    boards[--length] = null;
+    this.boards[--this.length] = null;
     // no[length - 1] = 0;
     // name[length - 1] = null;
     // email[length - 1] = null;
@@ -120,9 +121,9 @@ public class BoardHandler {
     // length--;
   }
 
-  private static int indexOf(int boardNo) {
-    for (int i = 0; i < length; i++) {
-      Board board = boards[i];
+  private int indexOf(int boardNo) {
+    for (int i = 0; i < this.length; i++) {
+      Board board = this.boards[i];
       if (board.getNo() == boardNo) {
         return i;
       }
@@ -130,8 +131,8 @@ public class BoardHandler {
     return -1;
   }
 
-  private static boolean available() {
-    return length < MAX_SIZE;
+  private boolean available() {
+    return this.length < MAX_SIZE;
   }
 }
 
