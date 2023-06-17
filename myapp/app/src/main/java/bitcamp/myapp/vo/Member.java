@@ -29,6 +29,51 @@ public class Member {
     this.no = userId++;
   }
 
+  // 같은 기능을 수행하는 생성자가 위에 있다.
+  // 다만 파라미터가 다를 뿐이다.
+  // => "생성자 오버로딩(overloading)"
+  public Member(int no) {
+    this.no = no;
+  }
+
+  public boolean equals(Object obj) {
+    if (obj == null) {
+      return false;
+    }
+
+    if (this.getClass() != obj.getClass()) {
+      return false;
+    }
+
+    // 위 조건에서 this가 가리키는 인스턴스의 클래스와
+    // 파라미터 obj가 가리키는 인스턴스의 클래스가
+    // 같다고 결론이 났기 때문에 다음과 같이
+    // obj를 Member 타입으로 형변환한다.
+    Member m = (Member) obj;
+
+    if (this.getNo() != m.getNo()) {
+      return false;
+    }
+
+    // if (this.getName() != null && !this.getName().equals(m.getName())) {
+    // return false;
+    // }
+    //
+    // if (this.getEmail() != null && !this.getEmail().equals(m.getEmail())) {
+    // return false;
+    // }
+    //
+    // if (this.getPassword() != null && !this.getPassword().equals(m.getPassword())) {
+    // return false;
+    // }
+    //
+    // if (this.getGender() != m.getGender()) {
+    // return false;
+    // }
+
+    return true;
+  }
+
   // 겟터/셋터는 인스턴스 필드의 값을 설정하고 꺼내는 메서드다.
   // 보통 외부에서 직접 필드에 접근하는 것을 막았을 때 사용한다.
   public int getNo() {
