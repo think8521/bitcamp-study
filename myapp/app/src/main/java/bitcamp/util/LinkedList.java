@@ -8,27 +8,37 @@ public class LinkedList implements List {
 
   public static void main(String[] args) {
     LinkedList list = new LinkedList();
-    list.add(Integer.valueOf(100));
-    list.add(Integer.valueOf(200));
-    list.add(Integer.valueOf(300));
-    list.add(Integer.valueOf(400));
-    list.add(Integer.valueOf(500));
+    list.add(Integer.valueOf(100)); // index: 0
+    list.add(Integer.valueOf(200)); // index: 1
+    list.add(Integer.valueOf(300)); // index: 2
+    list.add(Integer.valueOf(400)); // index: 3
+    list.add(Integer.valueOf(500)); // index: 4
 
     print(list);
+
+    // System.out.println(list.remove(Integer.valueOf(300)));
+    // System.out.println(list.remove(Integer.valueOf(500)));
     // System.out.println(list.remove(Integer.valueOf(100)));
     // System.out.println(list.remove(Integer.valueOf(200)));
-    // System.out.println(list.remove(Integer.valueOf(300)));
     // System.out.println(list.remove(Integer.valueOf(400)));
-    // System.out.println(list.remove(500));
-    // System.out.println(list.remove(600));
+    // System.out.println(list.remove(Integer.valueOf(600)));
+
     System.out.println(list.remove(2));
     System.out.println(list.remove(3));
     System.out.println(list.remove(0));
+    System.out.println(list.remove(0));
+    System.out.println(list.remove(0));
 
     list.add(Integer.valueOf(1000));
+    list.add(Integer.valueOf(2000));
 
     print(list);
 
+
+    // System.out.println(list.retrieve(100));
+    // System.out.println(list.retrieve(300));
+    // System.out.println(list.retrieve(500));
+    // System.out.println(list.retrieve(600));
   }
 
   static void print(LinkedList list) {
@@ -40,19 +50,13 @@ public class LinkedList implements List {
     System.out.println();
   }
 
-
+  @Override
   public boolean add(Object value) {
-
-
-    // 1. 새 노드를 생성한다.
     Node node = new Node();
-
-    // 2. 새 노드에 값 저장
     node.value = value;
 
-
-    if (head == null) {
-      head = node;
+    if (this.head == null) {
+      this.head = node;
     } else if (this.tail != null) {
       this.tail.next = node;
     }
@@ -62,11 +66,11 @@ public class LinkedList implements List {
     return true;
   }
 
+  @Override
   public Object[] toArray() {
     Object[] arr = new Object[this.size];
 
     Node cursor = this.head;
-
     for (int i = 0; i < this.size; i++) {
       arr[i] = cursor.value;
       cursor = cursor.next;
@@ -75,10 +79,12 @@ public class LinkedList implements List {
     return arr;
   }
 
+  @Override
   public Object get(int index) {
-    if (isValid(index)) {
+    if (!isValid(index)) {
       return null;
     }
+
     Node cursor = this.head;
 
     for (int i = 0; i < index; i++) {
@@ -96,17 +102,17 @@ public class LinkedList implements List {
     while (cursor != null) {
       if (cursor.value.equals(value)) {
         if (prev == null) {
-          head = cursor.next;
-          if (head == null) {
-            tail = null;
+          this.head = cursor.next;
+          if (this.head == null) {
+            this.tail = null;
           }
         } else if (cursor.next == null) {
-          tail = prev;
-          tail.next = null;
+          this.tail = prev;
+          this.tail.next = null;
         } else {
           prev.next = cursor.next;
         }
-        size--;
+        this.size--;
         cursor.next = null;
         cursor.value = null;
         return true;
@@ -120,7 +126,7 @@ public class LinkedList implements List {
 
   @Override
   public Object remove(int index) {
-    if (isValid(index)) {
+    if (!isValid(index)) {
       return null;
     }
 
@@ -137,24 +143,17 @@ public class LinkedList implements List {
     Object old = cursor.value;
 
     if (prev == null) {
-      head = cursor.next;
-
-      if (head == null) {
-        tail = null;
+      this.head = cursor.next;
+      if (this.head == null) {
+        this.tail = null;
       }
-
     } else if (cursor.next == null) {
-      // 삭제할 노드가 끝 노드라면
-      tail = prev;
-      tail.next = null;
-
+      this.tail = prev;
+      this.tail.next = null;
     } else {
-      // 중간 노드라면, 다음 노드의 주소를 이전 노드에 저장한다.
       prev.next = cursor.next; // 현재 커서의 다음 노드를 현재 커서의 이전 노드와 연결한다.
     }
-    size--;
-
-    // 가비지 객체를 초기화시켜서 가비지가 인스턴스를 가리키지 않도록 한다.
+    this.size--;
     cursor.next = null;
     cursor.value = null;
 
