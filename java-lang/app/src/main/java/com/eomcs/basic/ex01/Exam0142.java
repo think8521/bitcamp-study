@@ -23,6 +23,7 @@ public class Exam0142 {
     System.out.println(obj2);
   }
 
+
   static class My {
     String name;
     int age;
@@ -35,6 +36,7 @@ public class Exam0142 {
     public int hashCode() {
       return Objects.hash(age, name);
     }
+
     @Override
     public boolean equals(Object obj) {
       if (this == obj)
@@ -46,13 +48,11 @@ public class Exam0142 {
       My other = (My) obj;
       return age == other.age && Objects.equals(name, other.name);
     }
+
+
+
   }
 
 }
-
-
-
-
-
 
 
