@@ -1,14 +1,14 @@
 package bitcamp.myapp.handler;
 
+import java.util.List;
 import bitcamp.myapp.vo.Member;
 import bitcamp.util.BreadcrumbPrompt;
-import bitcamp.util.List;
 
 // MamberHandler는 Handler 규칙에 따라 메서드를 구현했다.
 // 즉 Handler 인터페이스에 선언된 메서드를 모두 정의했다.
 public class MemberDetailListener extends AbstractMemberListener {
 
-  public MemberDetailListener(List list) {
+  public MemberDetailListener(List<Member> list) {
     super(list);
   }
 
