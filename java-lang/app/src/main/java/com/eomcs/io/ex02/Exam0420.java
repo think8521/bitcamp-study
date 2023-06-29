@@ -17,6 +17,7 @@ public class Exam0420 {
     GpsDirectory gpsDirectory = metadata.getFirstDirectoryOfType(GpsDirectory.class);
 
     if (gpsDirectory != null) {
+      // 사진 파일에 GPS 정보가 있을 경우,
       System.out.println(gpsDirectory.getGeoLocation().getLatitude());
       System.out.println(gpsDirectory.getGeoLocation().getLongitude());
     }
