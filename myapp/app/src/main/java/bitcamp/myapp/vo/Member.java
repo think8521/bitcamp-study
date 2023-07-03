@@ -1,6 +1,9 @@
 package bitcamp.myapp.vo;
 
-public class Member {
+import java.io.Serializable;
+
+public class Member implements Serializable, CsvObject, AutoIncrement {
+  private static final long serialVersionUID = 1L;
 
   // 모든 인스턴스가 공유하는 값은 스태틱 필드에 보관한다.
   public static int userId = 1;
@@ -20,21 +23,40 @@ public class Member {
   private String password;
   private char gender;
 
-  // 생성자는 인스턴스를 생성한 후 필드를 초기화시키는 일을 한다.
-  // 인스턴스를 사용할 떄 문제가 없도록 유효한 값으로 초기화시킨다.
-  // 기본 생성자(default constructor)는 개발자가 생성자를 정의하지 않을 때
-  // 컴파일러가 추가해주는 생성자다.
-  // 물론 개발자가 직접 추가할 수도 있다.
-  public Member() {
-    this.no = userId++;
-  }
+  public Member() {};
 
-  // 같은 기능을 수행하는 생성자가 위에 있다.
-  // 다만 파라미터가 다를 뿐이다.
-  // => "생성자 오버로딩(overloading)"
   public Member(int no) {
     this.no = no;
   }
+
+  public static Member fromCsv(String csv) {
+    String[] values = csv.split(",");
+
+    Member member = new Member(Integer.parseInt(values[0]));
+    member.setName(values[1]);
+    member.setEmail(values[2]);
+    member.setName(values[3]);
+    member.setGender(values[4].charAt(0));
+
+    if (Member.userId <= member.getNo()) {
+      Member.userId = member.getNo() + 1;
+    }
+
+    return member;
+  }
+
+  public String toCsvString() {
+    return String.format("%d,%s,%s,%s,%c", this.getNo(), this.getName(), this.getEmail(),
+        this.getPassword(), this.getGender());
+  }
+
+  @Override
+  public void updatekey() {
+    if (Member.userId <= this.no) {
+      Member.userId = this.no + 1;
+    }
+  }
+
 
   public boolean equals(Object obj) {
     if (obj == null) {

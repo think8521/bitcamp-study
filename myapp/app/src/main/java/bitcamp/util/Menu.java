@@ -17,11 +17,11 @@ public class Menu {
   }
 
   public void addActionListener(ActionListener listener) {
-    this.listeners.add(listener);
+    listeners.add(listener);
   }
 
   public void removeActionListener(ActionListener listener) {
-    this.listeners.remove(listener);
+    listeners.remove(listener);
   }
 
   public String getTitle() {
@@ -29,11 +29,9 @@ public class Menu {
   }
 
   public void execute(BreadcrumbPrompt prompt) {
-    for (int i = 0; i < this.listeners.size(); i++) {
+    for (int i = 0; i < listeners.size(); i++) {
       ActionListener listener = listeners.get(i);
       listener.service(prompt);
     }
   }
-
-
 }

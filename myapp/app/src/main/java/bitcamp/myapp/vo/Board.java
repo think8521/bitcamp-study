@@ -1,6 +1,9 @@
 package bitcamp.myapp.vo;
 
-public class Board {
+import java.io.Serializable;
+
+public class Board implements Serializable, CsvObject, AutoIncrement {
+  private static final long serialVersionUID = 1L;
 
   public static int boardNo = 1;
 
@@ -12,13 +15,40 @@ public class Board {
   private int viewCount;
   private long createdDate;
 
-  public Board() {
-    this.no = boardNo++;
-    this.createdDate = System.currentTimeMillis();
-  }
+  public Board() {}
 
   public Board(int no) {
     this.no = no;
+  }
+
+  public static Board fromCsv(String csv) {
+    String[] values = csv.split(",");
+
+    Board board = new Board(Integer.parseInt(values[0]));
+    board.setTitle(values[1]);
+    board.setContent(values[2]);
+    board.setWriter(values[3]);
+    board.setPassword(values[4]);
+    board.setViewCount(Integer.parseInt(values[5]));
+    board.setCreatedDate(Long.parseLong(values[6]));
+
+    if (Board.boardNo <= board.getNo()) {
+      Board.boardNo = board.getNo() + 1;
+    }
+
+    return board;
+  }
+
+  @Override
+  public void updatekey() {
+    if (Board.boardNo <= this.no) {
+      Board.boardNo = this.no + 1;
+    }
+  }
+
+  public String toCsvString() {
+    return String.format("%d,%s,%s,%s,%s,%d,%d", this.getNo(), this.getTitle(), this.getContent(),
+        this.getWriter(), this.getPassword(), this.getViewCount(), this.getCreatedDate());
   }
 
   public boolean equals(Object obj) {
