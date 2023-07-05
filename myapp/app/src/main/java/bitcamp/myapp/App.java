@@ -4,13 +4,16 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import bitcamp.myapp.dao.BoardDao;
+import bitcamp.myapp.dao.BoardListDao;
+import bitcamp.myapp.dao.MemberDao;
+import bitcamp.myapp.dao.MemberListDao;
 import bitcamp.myapp.handler.BoardAddListener;
 import bitcamp.myapp.handler.BoardDeleteListener;
 import bitcamp.myapp.handler.BoardDetailListener;
@@ -26,14 +29,15 @@ import bitcamp.myapp.handler.MemberListListener;
 import bitcamp.myapp.handler.MemberUpdateListener;
 import bitcamp.myapp.vo.AutoIncrement;
 import bitcamp.myapp.vo.Board;
-import bitcamp.myapp.vo.Member;
 import bitcamp.util.BreadcrumbPrompt;
 import bitcamp.util.Menu;
 import bitcamp.util.MenuGroup;
 
 public class App {
 
-  ArrayList<Member> memberList = new ArrayList<>();
+  MemberDao memberDao = new MemberListDao("member.json");
+  BoardDao boardDao = new BoardListDao("board.json");
+  BoardDao readingDao = new BoardListDao("reading.json");
   LinkedList<Board> boardList = new LinkedList<>();
   LinkedList<Board> readingList = new LinkedList<>();
 
@@ -65,40 +69,38 @@ public class App {
   }
 
   private void loadData() {
-    loadJson("member.Json", memberList, Member.class);
     loadJson("board.Json", boardList, Board.class);
     loadJson("reading.Json", readingList, Board.class);
   }
 
   private void saveData() {
-    saveJson("member.Json", memberList);
     saveJson("board.Json", boardList);
     saveJson("reading.Json", readingList);
   }
 
   private void prepareMenu() {
     MenuGroup memberMenu = new MenuGroup("회원");
-    memberMenu.add(new Menu("등록", new MemberAddListener(memberList)));
-    memberMenu.add(new Menu("목록", new MemberListListener(memberList)));
-    memberMenu.add(new Menu("조회", new MemberDetailListener(memberList)));
-    memberMenu.add(new Menu("변경", new MemberUpdateListener(memberList)));
-    memberMenu.add(new Menu("삭제", new MemberDeleteListener(memberList)));
+    memberMenu.add(new Menu("등록", new MemberAddListener(memberDao)));
+    memberMenu.add(new Menu("목록", new MemberListListener(memberDao)));
+    memberMenu.add(new Menu("조회", new MemberDetailListener(memberDao)));
+    memberMenu.add(new Menu("변경", new MemberUpdateListener(memberDao)));
+    memberMenu.add(new Menu("삭제", new MemberDeleteListener(memberDao)));
     mainMenu.add(memberMenu);
 
     MenuGroup boardMenu = new MenuGroup("게시글");
-    boardMenu.add(new Menu("등록", new BoardAddListener(boardList)));
-    boardMenu.add(new Menu("목록", new BoardListListener(boardList)));
-    boardMenu.add(new Menu("조회", new BoardDetailListener(boardList)));
-    boardMenu.add(new Menu("변경", new BoardUpdateListener(boardList)));
-    boardMenu.add(new Menu("삭제", new BoardDeleteListener(boardList)));
+    boardMenu.add(new Menu("등록", new BoardAddListener(boardDao)));
+    boardMenu.add(new Menu("목록", new BoardListListener(boardDao)));
+    boardMenu.add(new Menu("조회", new BoardDetailListener(boardDao)));
+    boardMenu.add(new Menu("변경", new BoardUpdateListener(boardDao)));
+    boardMenu.add(new Menu("삭제", new BoardDeleteListener(boardDao)));
     mainMenu.add(boardMenu);
 
     MenuGroup readingMenu = new MenuGroup("독서록");
-    readingMenu.add(new Menu("등록", new BoardAddListener(readingList)));
-    readingMenu.add(new Menu("목록", new BoardListListener(readingList)));
-    readingMenu.add(new Menu("조회", new BoardDetailListener(readingList)));
-    readingMenu.add(new Menu("변경", new BoardUpdateListener(readingList)));
-    readingMenu.add(new Menu("삭제", new BoardDeleteListener(readingList)));
+    readingMenu.add(new Menu("등록", new BoardAddListener(readingDao)));
+    readingMenu.add(new Menu("목록", new BoardListListener(readingDao)));
+    readingMenu.add(new Menu("조회", new BoardDetailListener(readingDao)));
+    readingMenu.add(new Menu("변경", new BoardUpdateListener(readingDao)));
+    readingMenu.add(new Menu("삭제", new BoardDeleteListener(readingDao)));
     mainMenu.add(readingMenu);
 
     Menu helloMenu = new Menu("안녕!");
