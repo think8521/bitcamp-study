@@ -1,10 +1,11 @@
 package bitcamp.myapp.handler;
 
-import bitcamp.myapp.dao.BoardDao;
+import bitcamp.myapp.Dao.BoardDao;
 import bitcamp.myapp.vo.Board;
+import bitcamp.util.ActionListener;
 import bitcamp.util.BreadcrumbPrompt;
 
-public class BoardUpdateListener implements BoardActionListener {
+public class BoardUpdateListener implements ActionListener {
 
   BoardDao boardDao;
 
@@ -12,11 +13,11 @@ public class BoardUpdateListener implements BoardActionListener {
     this.boardDao = boardDao;
   }
 
-
+  @Override
   public void service(BreadcrumbPrompt prompt) {
-    int BoardNo = prompt.inputInt("번호? ");
+    int boardNo = prompt.inputInt("번호? ");
 
-    Board board = boardDao.fineBy(BoardNo);
+    Board board = boardDao.findBy(boardNo);
     if (board == null) {
       System.out.println("해당 번호의 게시글이 없습니다!");
       return;

@@ -15,8 +15,7 @@ public class JsonDataHelper {
   public static <T> void loadJson(String filename, List<T> list, Class<T> clazz) {
     try {
       FileReader in0 = new FileReader(filename);
-      BufferedReader in = new BufferedReader(in0);
-
+      BufferedReader in = new BufferedReader(in0); // <== Decorator 역할을 수행!
 
       StringBuilder strBuilder = new StringBuilder();
       String line = null;
@@ -25,31 +24,27 @@ public class JsonDataHelper {
         strBuilder.append(line);
       }
 
-
       in.close();
 
       Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-
       Collection<T> objects = gson.fromJson(strBuilder.toString(),
           TypeToken.getParameterized(Collection.class, clazz).getType());
 
       list.addAll(objects);
 
-      // if (clazz.)
       Class<?>[] interfaces = clazz.getInterfaces();
       for (Class<?> info : interfaces) {
         if (info == AutoIncrement.class) {
           AutoIncrement autoIncrement = (AutoIncrement) list.get(list.size() - 1);
-          autoIncrement.updatekey();
+          autoIncrement.updateKey();
           break;
         }
       }
 
     } catch (Exception e) {
-      System.out.println(filename + "을 읽는 중 오류 발생!");
+      System.out.println(filename + " 파일을 읽는 중 오류 발생!");
     }
   }
-
 
   public static void saveJson(String filename, List<?> list) {
     try {
@@ -62,7 +57,7 @@ public class JsonDataHelper {
       out.close();
 
     } catch (Exception e) {
-      System.out.println(filename + "파일을 저장하는 중 오류 발생!");
+      System.out.println(filename + " 파일을 저장하는 중 오류 발생!");
     }
   }
 }

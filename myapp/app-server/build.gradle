@@ -8,6 +8,9 @@ repositories {
 }
 
 dependencies {
+    // 서브 프로젝트의 클래스 사용하기
+    implementation project(':app-common') 
+    
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.1'
 
     implementation 'com.google.guava:guava:31.1-jre'

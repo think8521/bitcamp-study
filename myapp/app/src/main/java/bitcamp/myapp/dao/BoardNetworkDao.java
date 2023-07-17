@@ -2,6 +2,7 @@ package bitcamp.myapp.dao;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import com.google.gson.Gson;
@@ -24,7 +25,12 @@ public class BoardNetworkDao implements BoardDao {
   @Override
   public void insert(Board board) {
     try {
+      Gson gson = new Gson();
       // 서버에서 실행할 명령을 보낸다.
+      HashMap<String,Object> request = new HashMap<>();
+      request.put("command", dataName + "\insert");
+      request.put("data", dataName + "\insert");
+
       out.writeUTF(dataName + "/insert");
 
       // 명령을 실행할 때 사용할 데이터를 보낸다.

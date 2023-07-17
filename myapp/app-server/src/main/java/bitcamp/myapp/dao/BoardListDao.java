@@ -2,6 +2,7 @@ package bitcamp.myapp.dao;
 
 import java.util.LinkedList;
 import java.util.List;
+import bitcamp.myapp.Dao.BoardDao;
 import bitcamp.myapp.vo.Board;
 import bitcamp.util.JsonDataHelper;
 
@@ -30,7 +31,7 @@ public class BoardListDao implements BoardDao {
   }
 
   @Override
-  public Board fineBy(int no) {
+  public Board findBy(int no) {
     for (int i = 0; i < this.list.size(); i++) {
       Board board = this.list.get(i);
       if (board.getNo() == no) {
