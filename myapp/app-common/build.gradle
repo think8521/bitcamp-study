@@ -8,15 +8,11 @@ repositories {
 }
 
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.1'
-
-    implementation 'com.google.guava:guava:31.1-jre'
-    
     // Google JSON 라이브러리
     implementation 'com.google.code.gson:gson:2.10.1'
   
-    // jackson-databind JSON 라이브러리
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.1'
+    implementation 'com.google.guava:guava:31.1-jre'
 }
 
 java {
@@ -45,7 +41,7 @@ tasks.withType(JavaCompile) {
 // eclipse 프로젝트 이름을 설정하기
 eclipse {
     project {
-        name = "app-common"
+        name = "think myapp-common"
     }
     jdt {
       sourceCompatibility = 17

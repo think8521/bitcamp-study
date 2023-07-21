@@ -2,16 +2,9 @@ package bitcamp.myapp.vo;
 
 import java.io.Serializable;
 
-public class Member implements Serializable, CsvObject, AutoIncrement {
+public class Member implements Serializable {
   private static final long serialVersionUID = 1L;
 
-  // 모든 인스턴스가 공유하는 값은 스태틱 필드에 보관한다.
-  public static int userId = 1;
-
-  // 상수는 스태틱 필드로 정의한다.
-  // 정보를 다룰 떄는 그 정보를 갖고 있는 클래스에 그 기능을 둔다.
-  // 필드도 마찬가지다.
-  // => GRASP 패턴: Information Expert
   public static final char MALE = 'M';
   public static final char FEMALE = 'W';
 
@@ -28,35 +21,6 @@ public class Member implements Serializable, CsvObject, AutoIncrement {
   public Member(int no) {
     this.no = no;
   }
-
-  public static Member fromCsv(String csv) {
-    String[] values = csv.split(",");
-
-    Member member = new Member(Integer.parseInt(values[0]));
-    member.setName(values[1]);
-    member.setEmail(values[2]);
-    member.setName(values[3]);
-    member.setGender(values[4].charAt(0));
-
-    if (Member.userId <= member.getNo()) {
-      Member.userId = member.getNo() + 1;
-    }
-
-    return member;
-  }
-
-  public String toCsvString() {
-    return String.format("%d,%s,%s,%s,%c", this.getNo(), this.getName(), this.getEmail(),
-        this.getPassword(), this.getGender());
-  }
-
-  @Override
-  public void updateKey() {
-    if (Member.userId <= this.no) {
-      Member.userId = this.no + 1;
-    }
-  }
-
 
   public boolean equals(Object obj) {
     if (obj == null) {
