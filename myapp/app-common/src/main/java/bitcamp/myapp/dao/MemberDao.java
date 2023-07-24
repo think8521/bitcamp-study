@@ -1,4 +1,4 @@
-package bitcamp.myapp.Dao;
+package bitcamp.myapp.dao;
 
 import java.util.List;
 import bitcamp.myapp.vo.Member;

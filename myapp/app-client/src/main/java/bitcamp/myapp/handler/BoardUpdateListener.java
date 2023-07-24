@@ -1,6 +1,6 @@
 package bitcamp.myapp.handler;
 
-import bitcamp.myapp.Dao.BoardDao;
+import bitcamp.myapp.dao.BoardDao;
 import bitcamp.myapp.vo.Board;
 import bitcamp.util.ActionListener;
 import bitcamp.util.BreadcrumbPrompt;
@@ -23,13 +23,16 @@ public class BoardUpdateListener implements ActionListener {
       return;
     }
 
-    if (!prompt.inputString("암호? ").equals(board.getPassword())) {
-      System.out.println("암호가 일치하지 않습니다!");
-      return;
-    }
-
     board.setTitle(prompt.inputString("제목(%s)? ", board.getTitle()));
     board.setContent(prompt.inputString("내용(%s)? ", board.getContent()));
+    board.setPassword(prompt.inputString("암호? "));
+
+    if (boardDao.update(board) == 0) {
+      System.out.println("암호가 일치하지 않습니다!");
+    } else {
+      System.out.println("변경했습니다");
+    }
+
 
     boardDao.update(board);
   }

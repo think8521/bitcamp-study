@@ -1,6 +1,7 @@
 package bitcamp.myapp.handler;
 
-import bitcamp.myapp.Dao.BoardDao;
+import bitcamp.myapp.dao.BoardDao;
+import bitcamp.myapp.vo.Board;
 import bitcamp.util.ActionListener;
 import bitcamp.util.BreadcrumbPrompt;
 
@@ -14,7 +15,12 @@ public class BoardDeleteListener implements ActionListener {
 
   @Override
   public void service(BreadcrumbPrompt prompt) {
-    if (boardDao.delete(prompt.inputInt("번호? ")) == 0) {
+
+    Board b = new Board();
+    b.setNo(prompt.inputInt("번호? "));
+    b.setPassword(prompt.inputString("암호? "));
+
+    if (boardDao.delete(b) == 0) {
       System.out.println("해당 번호의 게시글이 없습니다!");
     }
   }

@@ -1,11 +1,12 @@
 package bitcamp.dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import bitcamp.myapp.Dao.MemberDao;
+import bitcamp.myapp.dao.MemberDao;
 import bitcamp.myapp.vo.Member;
 
 public class MySQLMemberDao implements MemberDao {
@@ -18,11 +19,15 @@ public class MySQLMemberDao implements MemberDao {
 
   @Override
   public void insert(Member member) {
-    try (Statement stmt = con.createStatement()) {
+    try (PreparedStatement stmt = con.prepareStatement(
+        "insert into myapp_member(name,email,password,gender)" + " values(? ,?, ?, ?) ")) {
 
-      stmt.executeUpdate(String.format(
-          "insert into myapp_member(name,email,password,gender) values('%s','%s','%s','%c') ",
-          member.getName(), member.getEmail(), member.getPassword(), member.getGender()));
+      stmt.setString(1, member.getName());
+      stmt.setString(2, member.getEmail());
+      stmt.setString(3, member.getPassword());
+      stmt.setString(4, String.valueOf(member.getGender()));
+
+      stmt.executeUpdate();
 
     } catch (Exception e) {
       throw new RuntimeException(e);
@@ -45,7 +50,6 @@ public class MySQLMemberDao implements MemberDao {
         m.setGender(rs.getString("gender").charAt(0));
 
         list.add(m);
-
       }
 
       return list;
@@ -79,15 +83,20 @@ public class MySQLMemberDao implements MemberDao {
     }
   }
 
+
+
   @Override
   public int update(Member member) {
-    try (Statement stmt = con.createStatement()) {
+    try (PreparedStatement stmt = con.prepareStatement("update myapp_member set" + " name=?,"
+        + "email=?," + "password=?," + "gender=?" + " where member_no=?")) {
 
-      return stmt.executeUpdate(String.format(
-          "update myapp_member set" + " name='%s'," + "email='%s'," + "password='%s',"
-              + "gender='%c'" + " where member_no=%d",
-          member.getName(), member.getEmail(), member.getPassword(), member.getGender(),
-          member.getNo()));
+      stmt.setString(1, member.getName());
+      stmt.setString(2, member.getEmail());
+      stmt.setString(3, member.getPassword());
+      stmt.setString(4, String.valueOf(member.getGender()));
+      stmt.setInt(5, member.getNo());
+
+      return stmt.executeUpdate();
 
     } catch (Exception e) {
       throw new RuntimeException(e);
@@ -96,9 +105,11 @@ public class MySQLMemberDao implements MemberDao {
 
   @Override
   public int delete(int no) {
-    try (Statement stmt = con.createStatement()) {
+    try (PreparedStatement stmt =
+        con.prepareStatement("delete from myapp_member where member_no=?")) {
+      stmt.setInt(1, no);
 
-      return stmt.executeUpdate(String.format("delete from myapp_member where member_no=%d", no));
+      return stmt.executeUpdate();
 
     } catch (Exception e) {
       throw new RuntimeException(e);

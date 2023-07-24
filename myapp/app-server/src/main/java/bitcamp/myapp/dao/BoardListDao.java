@@ -2,7 +2,7 @@ package bitcamp.myapp.dao;
 
 import java.util.LinkedList;
 import java.util.List;
-import bitcamp.myapp.Dao.BoardDao;
+import bitcamp.myapp.dao.BoardDao;
 import bitcamp.myapp.vo.Board;
 import bitcamp.util.JsonDataHelper;
 

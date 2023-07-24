@@ -2,7 +2,7 @@ package bitcamp.myapp.dao;
 
 import java.util.ArrayList;
 import java.util.List;
-import bitcamp.myapp.Dao.MemberDao;
+import bitcamp.myapp.dao.MemberDao;
 import bitcamp.myapp.vo.Member;
 import bitcamp.util.JsonDataHelper;
 

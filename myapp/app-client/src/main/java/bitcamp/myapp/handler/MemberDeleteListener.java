@@ -1,6 +1,6 @@
 package bitcamp.myapp.handler;
 
-import bitcamp.myapp.Dao.MemberDao;
+import bitcamp.myapp.dao.MemberDao;
 import bitcamp.util.ActionListener;
 import bitcamp.util.BreadcrumbPrompt;
 
