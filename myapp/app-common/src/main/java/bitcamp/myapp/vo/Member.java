@@ -1,6 +1,8 @@
 package bitcamp.myapp.vo;
 
 import java.io.Serializable;
+import java.sql.Date;
+import java.util.Objects;
 
 public class Member implements Serializable {
   private static final long serialVersionUID = 1L;
@@ -15,49 +17,25 @@ public class Member implements Serializable {
   private String email;
   private String password;
   private char gender;
+  private Date createdDate;
 
-  public Member() {};
 
-  public Member(int no) {
-    this.no = no;
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(no);
   }
 
+  @Override
   public boolean equals(Object obj) {
-    if (obj == null) {
+    if (this == obj)
+      return true;
+    if (obj == null)
       return false;
-    }
-
-    if (this.getClass() != obj.getClass()) {
+    if (getClass() != obj.getClass())
       return false;
-    }
-
-    // 위 조건에서 this가 가리키는 인스턴스의 클래스와
-    // 파라미터 obj가 가리키는 인스턴스의 클래스가
-    // 같다고 결론이 났기 때문에 다음과 같이
-    // obj를 Member 타입으로 형변환한다.
-    Member m = (Member) obj;
-
-    if (this.getNo() != m.getNo()) {
-      return false;
-    }
-
-    // if (this.getName() != null && !this.getName().equals(m.getName())) {
-    // return false;
-    // }
-    //
-    // if (this.getEmail() != null && !this.getEmail().equals(m.getEmail())) {
-    // return false;
-    // }
-    //
-    // if (this.getPassword() != null && !this.getPassword().equals(m.getPassword())) {
-    // return false;
-    // }
-    //
-    // if (this.getGender() != m.getGender()) {
-    // return false;
-    // }
-
-    return true;
+    Member other = (Member) obj;
+    return no == other.no;
   }
 
   // 겟터/셋터는 인스턴스 필드의 값을 설정하고 꺼내는 메서드다.
@@ -100,6 +78,14 @@ public class Member implements Serializable {
 
   public void setGender(char gender) {
     this.gender = gender;
+  }
+
+  public Date getCreatedDate() {
+    return createdDate;
+  }
+
+  public void setCreatedDate(Date createdDate) {
+    this.createdDate = createdDate;
   }
 
 
