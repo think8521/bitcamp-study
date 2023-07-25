@@ -412,7 +412,6 @@ https://whaleon.us/o/CSrtk1/001aa759f29c46b985e32dd8562f594a
     - 데이터베이스 추가/삭제
     - 사용자, 데이터베이스, 테이블 정보 조회
     - DBMS와 DBMS 클라이언트와 관계 
-
 - 프로젝트 실습
   - 45. 스레드 재사용하기 : 자바에서 제공하는 스레드풀(thread pool) 사용
 
@@ -429,7 +428,37 @@ https://whaleon.us/o/CSrtk1/001aa759f29c46b985e32dd8562f594a
 - 자바 프로그래밍
   - JDBC 프로그래밍(com.eomcs.jdbc)
     - SQL - DML 사용법
+    - SQL - DQL 사용법
+  
 
+### 42일(7/20,목)
+
+- 자바 프로그래밍
+  - JDBC 프로그래밍(com.eomcs.jdbc)
+    - SQL - DQL 사용법: 조인, 서브쿼리, 그룹 
+
+### 43일(7/21,금)
+
+- 자바 프로그래밍
+  - 자바 코딩 문제집(001)
+    - 제네릭, 중첩클래스, Map.compute(), BiFunction 인터페이스 사용법
+  - JDBC 프로그래밍(com.eomcs.jdbc)
+    - JDBC API와 Driver 개념
+    - JDBC 드라이버 로딩 원리
+    - select/insert/update/delete 프로그래밍
+- 프로젝트 실습
+  - 46. DBMS 도입하기
+
+### 44일(7/24,월)
+
+- 자바 프로그래밍
+  - JDBC 프로그래밍(com.eomcs.jdbc)
+    - PreparedStatement 사용법
+- 프로젝트 실습
+  - 46. DBMS 도입하기(계속)
+  - 47. SQL 삽입 공격 차단하기
+  - 48. 외부키(Foreign Key) 사용하기
+  - 49. 로그인 적용하기
 
 ## 웨일즈 화상회의
 

@@ -2,8 +2,6 @@ package bitcamp.myapp;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.net.InetSocketAddress;
-import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -26,12 +24,11 @@ import bitcamp.myapp.handler.MemberDetailListener;
 import bitcamp.myapp.handler.MemberListListener;
 import bitcamp.myapp.handler.MemberUpdateListener;
 import bitcamp.myapp.vo.Member;
-import bitcamp.net.NetProtocol;
 import bitcamp.util.BreadcrumbPrompt;
 import bitcamp.util.Menu;
 import bitcamp.util.MenuGroup;
 
-public class ServerApp {
+public class ClientApp {
 
   Socket socket;
   DataOutputStream out;
@@ -39,7 +36,6 @@ public class ServerApp {
 
   public static Member loginUser;
 
-  Connection con;
   MemberDao memberDao;
   BoardDao boardDao;
   BoardDao readingDao;
@@ -47,15 +43,13 @@ public class ServerApp {
   final int BOARD_CATEGORY = 1;
   final int READING_CATEGORY = 2;
 
+  BreadcrumbPrompt prompt = new BreadcrumbPrompt();
+
   MenuGroup mainMenu = new MenuGroup("메인");
 
-  int port;
+  public ClientApp(String ip, int port) throws Exception {
 
-  public ServerApp(int port) throws Exception {
-
-    this.port = port;
-
-    con = DriverManager.getConnection("jdbc:mysql://study:1111@localhost:3306/studydb"); //
+    Connection con = DriverManager.getConnection("jdbc:mysql://study:1111@localhost:3306/studydb"); //
 
 
     this.memberDao = new MySQLMemberDao(con);
@@ -66,49 +60,31 @@ public class ServerApp {
   }
 
   public void close() throws Exception {
-    con.close();
+    prompt.close();
   }
 
   public static void main(String[] args) throws Exception {
+    if (args.length < 2) {
+      System.out.println("실행 예) java ... bitcamp.myapp.ClientApp 서버주소 포트번호");
+      return;
+    }
 
-    ServerApp app = new ServerApp(8888);
+    ClientApp app = new ClientApp(args[0], Integer.parseInt(args[1]));
     app.execute();
     app.close();
   }
 
+  static void printTitle() {
+    System.out.println("나의 목록 관리 시스템");
+    System.out.println("----------------------------------");
+  }
+
   public void execute() {
-    try (ServerSocket serverSocket = new ServerSocket(this.port)) {
-      System.out.println("서버 실행 중...!");
+    printTitle();
 
-      while (true) {
-        try (Socket socket = serverSocket.accept();
-            DataInputStream in = new DataInputStream(socket.getInputStream());
-            DataOutputStream out = new DataOutputStream(socket.getOutputStream())) {
+    new LoginListener(memberDao).service(prompt);
 
-          BreadcrumbPrompt prompt = new BreadcrumbPrompt(in, out);
-
-          InetSocketAddress clientAddress = (InetSocketAddress) socket.getRemoteSocketAddress();
-          System.out.printf("%s 클라이언트 접속함!\n", clientAddress.getHostString());
-
-          out.writeUTF("[나의 목록 관리 시스템]\n" + "------------------------------------------");
-
-          new LoginListener(memberDao).service(prompt);
-
-          mainMenu.execute(prompt);
-          out.writeUTF(NetProtocol.NET_END);
-
-        } catch (Exception e) {
-          System.out.println("클라이언트 통신 오류!");
-          e.printStackTrace();
-        }
-      }
-
-
-    } catch (Exception e) {
-      System.out.println("서버 실행 오류!");
-      e.printStackTrace();
-    }
-
+    mainMenu.execute(prompt);
   }
 
   private void prepareMenu() {
