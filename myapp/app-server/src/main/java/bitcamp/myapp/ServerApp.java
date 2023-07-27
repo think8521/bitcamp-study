@@ -2,15 +2,19 @@ package bitcamp.myapp;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.InputStream;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import bitcamp.dao.MySQLBoardDao;
-import bitcamp.dao.MySQLMemberDao;
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import bitcamp.myapp.dao.BoardDao;
 import bitcamp.myapp.dao.MemberDao;
+import bitcamp.myapp.dao.MySQLBoardDao;
+import bitcamp.myapp.dao.MySQLMemberDao;
 import bitcamp.myapp.handler.BoardAddListener;
 import bitcamp.myapp.handler.BoardDeleteListener;
 import bitcamp.myapp.handler.BoardDetailListener;
@@ -30,12 +34,14 @@ import bitcamp.util.BreadcrumbPrompt;
 import bitcamp.util.DataSource;
 import bitcamp.util.Menu;
 import bitcamp.util.MenuGroup;
+import bitcamp.util.SqlSessionFactoryProxy;
 
 public class ServerApp {
 
   // 자바 스레드풀 준비
   ExecutorService threadPool = Executors.newFixedThreadPool(2);
 
+  SqlSessionFactory sqlSessionFactory;
   DataSource ds = new DataSource("jdbc:mysql://localhost:3306/studydb", "study", "1111");
   MemberDao memberDao;
   BoardDao boardDao;
@@ -56,10 +62,19 @@ public class ServerApp {
 
     this.port = port;
 
+    // 1) mybatis 설정 파일을 읽어들일 도구를 준비한다.
+    InputStream mybatisConfigIn =
+        Resources.getResourceAsStream("bitcamp/myapp/config/mybatis-config.xml");
+
+    // 2) SqlSessionFactory를 만들어줄 빌더 객체 준비
+    SqlSessionFactoryBuilder builder = new SqlSessionFactoryBuilder();
+
+    // 3) 빌더 객체를 통해 SqlSessionFactory를 생성
+    sqlSessionFactory = new SqlSessionFactoryProxy(builder.build(mybatisConfigIn));
 
     this.memberDao = new MySQLMemberDao(ds);
-    this.boardDao = new MySQLBoardDao(ds, BOARD_CATEGORY);
-    this.readingDao = new MySQLBoardDao(ds, READING_CATEGORY);
+    this.boardDao = new MySQLBoardDao(sqlSessionFactory, ds, BOARD_CATEGORY);
+    this.readingDao = new MySQLBoardDao(sqlSessionFactory, ds, READING_CATEGORY);
 
     prepareMenu();
   }
@@ -114,6 +129,7 @@ public class ServerApp {
 
     } finally {
       ds.clean(); // 현재 스레드에 보관된 Connection 객체를 닫고, 스레드에서 제거한다.
+      ((SqlSessionFactoryProxy) sqlSessionFactory).clean();
     }
   }
 
@@ -127,17 +143,17 @@ public class ServerApp {
     mainMenu.add(memberMenu);
 
     MenuGroup boardMenu = new MenuGroup("게시글");
-    boardMenu.add(new Menu("등록", new BoardAddListener(boardDao, ds)));
+    boardMenu.add(new Menu("등록", new BoardAddListener(boardDao, sqlSessionFactory)));
     boardMenu.add(new Menu("목록", new BoardListListener(boardDao)));
-    boardMenu.add(new Menu("조회", new BoardDetailListener(boardDao, ds)));
+    boardMenu.add(new Menu("조회", new BoardDetailListener(boardDao, sqlSessionFactory)));
     boardMenu.add(new Menu("변경", new BoardUpdateListener(boardDao, ds)));
     boardMenu.add(new Menu("삭제", new BoardDeleteListener(boardDao, ds)));
     mainMenu.add(boardMenu);
 
     MenuGroup readingMenu = new MenuGroup("독서록");
-    readingMenu.add(new Menu("등록", new BoardAddListener(readingDao, ds)));
+    readingMenu.add(new Menu("등록", new BoardAddListener(readingDao, sqlSessionFactory)));
     readingMenu.add(new Menu("목록", new BoardListListener(readingDao)));
-    readingMenu.add(new Menu("조회", new BoardDetailListener(readingDao, ds)));
+    readingMenu.add(new Menu("조회", new BoardDetailListener(readingDao, sqlSessionFactory)));
     readingMenu.add(new Menu("변경", new BoardUpdateListener(readingDao, ds)));
     readingMenu.add(new Menu("삭제", new BoardDeleteListener(readingDao, ds)));
     mainMenu.add(readingMenu);
