@@ -1,28 +1,30 @@
 package bitcamp.myapp.handler;
 
 import java.io.IOException;
+import org.apache.ibatis.session.SqlSessionFactory;
 import bitcamp.myapp.dao.BoardDao;
 import bitcamp.myapp.vo.Board;
 import bitcamp.myapp.vo.Member;
 import bitcamp.util.ActionListener;
 import bitcamp.util.BreadcrumbPrompt;
-import bitcamp.util.DataSource;
 
 public class BoardUpdateListener implements ActionListener {
 
+  int category;
   BoardDao boardDao;
-  DataSource ds;
+  SqlSessionFactory sqlSessionFactory;
 
-  public BoardUpdateListener(BoardDao boardDao, DataSource ds) {
+  public BoardUpdateListener(int category, BoardDao boardDao, SqlSessionFactory sqlSessionFactory) {
+    this.category = category;
     this.boardDao = boardDao;
-    this.ds = ds;
+    this.sqlSessionFactory = sqlSessionFactory;
   }
 
   @Override
   public void service(BreadcrumbPrompt prompt) throws IOException {
     int boardNo = prompt.inputInt("번호? ");
 
-    Board board = boardDao.findBy(boardNo);
+    Board board = boardDao.findBy(category, boardNo);
     if (board == null) {
       prompt.println("해당 번호의 게시글이 없습니다!");
       return;
@@ -39,13 +41,10 @@ public class BoardUpdateListener implements ActionListener {
     }
 
     try {
-      ds.getConnection().commit();
+      sqlSessionFactory.openSession(false).commit();
 
     } catch (Exception e) {
-      try {
-        ds.getConnection().rollback();
-      } catch (Exception e2) {
-      }
+      sqlSessionFactory.openSession(false).rollback();
       throw new RuntimeException(e);
     }
   }
