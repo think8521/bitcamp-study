@@ -7,7 +7,7 @@ import bitcamp.util.ActionListener;
 import bitcamp.util.BreadcrumbPrompt;
 import bitcamp.util.Component;
 
-@Component
+@Component("/member/detail")
 public class MemberDetailListener implements ActionListener {
 
   MemberDao memberDao;

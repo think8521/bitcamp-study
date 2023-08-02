@@ -5,7 +5,9 @@ import bitcamp.myapp.dao.MemberDao;
 import bitcamp.myapp.vo.Member;
 import bitcamp.util.ActionListener;
 import bitcamp.util.BreadcrumbPrompt;
+import bitcamp.util.Component;
 
+@Component("/auth/login")
 public class LoginListener implements ActionListener {
 
   MemberDao memberDao;

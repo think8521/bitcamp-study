@@ -7,7 +7,7 @@ import bitcamp.myapp.vo.Member;
 import bitcamp.util.BreadcrumbPrompt;
 import bitcamp.util.Component;
 
-@Component
+@Component("/member/update")
 public class MemberUpdateListener implements MemberActionListener {
 
   MemberDao memberDao;
