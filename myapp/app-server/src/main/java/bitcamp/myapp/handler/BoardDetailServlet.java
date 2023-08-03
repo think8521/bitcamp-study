@@ -42,7 +42,8 @@ public class BoardDetailServlet implements Servlet {
 
     } else {
       out.println("<form action='/board/update'>");
-      out.printf("<input type='hidden' name='category' value='%d'>\n", board.getCategory());
+      out.printf("<input type='hidden' name='category' value='%d' method='post'>\n",
+          board.getCategory());
       out.println("<table border='1'>");
       out.printf("<tr><th style='width:120px;'>번호</th>"
           + " <td style='width:300px;'><input type='text' name='no' value='%d' readonly></td></tr>\n",
