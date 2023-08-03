@@ -18,7 +18,7 @@ public class MySQLMemberDao implements MemberDao {
   @Override
   public void insert(Member member) {
     SqlSession sqlSession = sqlSessionFactory.openSession(false);
-    sqlSession.insert("bitcamp.myapp.dao.MemberDao.insert");
+    sqlSession.insert("bitcamp.myapp.dao.MemberDao.insert", member);
   }
 
   @Override
