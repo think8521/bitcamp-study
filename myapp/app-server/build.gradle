@@ -1,6 +1,7 @@
 plugins {
-    id 'application'
-    id 'eclipse'
+    id 'java'
+    id 'eclipse-wtp'
+    id 'war'
 }
 
 repositories {
@@ -15,17 +16,17 @@ dependencies {
     implementation 'mysql:mysql-connector-java:8.0.33'
     
     // Google JSON 라이브러리
-    implementation 'com.google.code.gson:gson:2.10.1'
+    //implementation 'com.google.code.gson:gson:2.10.1'
     
     // Mybatis 라이브러리
     implementation 'org.mybatis:mybatis:3.5.13'
     
     // Netty 프레임워크
     //implementation 'io.netty:netty-all:4.1.96.Final'
-    // Reactor Netty 프레임워크
-    implementation platform('io.projectreactor:reactor-bom:2022.0.9') 
-    implementation 'io.projectreactor.netty:reactor-netty-core' 
-    implementation 'io.projectreactor.netty:reactor-netty-http'
+
+    
+    // Servlet API
+    providedCompile 'javax.servlet:javax.servlet-api:4.0.1'
   
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.1'
     implementation 'com.google.guava:guava:31.1-jre'
@@ -35,10 +36,6 @@ java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(17)
     }
-}
-
-application {
-    mainClass = 'bitcamp.myapp.ServerApp'
 }
 
 tasks.named('test') {
@@ -68,4 +65,19 @@ eclipse {
       targetCompatibility = 17
       javaRuntimeName = "JavaSE-17"
     }
+    
+    wtp {
+        facet {
+            facet name: 'jst.java', version: '17'
+            //facet name: 'jst.web', version: '4.0'
+        }
+        component {
+            contextPath = '/'
+            //deployName = 'web'
+        }
+    }
+}
+
+war {
+    archiveBaseName = "myapp"
 }
