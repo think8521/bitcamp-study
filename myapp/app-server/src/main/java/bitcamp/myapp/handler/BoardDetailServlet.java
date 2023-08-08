@@ -16,9 +16,10 @@ public class BoardDetailServlet extends HttpServlet {
 
 
   @Override
-  protected void service(HttpServletRequest request, HttpServletResponse response)
+  protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
 
+    request.setCharacterEncoding("UTF-8");
     Board board = InitServlet.boardDao.findBy(Integer.parseInt(request.getParameter("category")),
         Integer.parseInt(request.getParameter("no")));
 
@@ -37,9 +38,8 @@ public class BoardDetailServlet extends HttpServlet {
       out.println("<p>해당 번호의 게시글이 없습니다!</p>");
 
     } else {
-      out.println("<form action='/board/update'>");
-      out.printf("<input type='hidden' name='category' value='%d' method='post'>\n",
-          board.getCategory());
+      out.println("<form action='/board/update' method='post'>");
+      out.printf("<input type='hidden' name='category' value='%d'>\n", board.getCategory());
       out.println("<table border='1'>");
       out.printf("<tr><th style='width:120px;'>번호</th>"
           + " <td style='width:300px;'><input type='text' name='no' value='%d' readonly></td></tr>\n",
