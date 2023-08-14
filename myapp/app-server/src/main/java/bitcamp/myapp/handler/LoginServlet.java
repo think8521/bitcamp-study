@@ -36,7 +36,7 @@ public class LoginServlet extends HttpServlet {
     out.println("<html>");
     out.println("<head>");
     out.println("<meta charset='UTF-8'>");
-    out.println("<meta http-equiv='refresh' content='1;url=/auth/form.html'>");
+    out.println("<meta http-equiv='refresh' content='1;url=/index.html'>");
     out.println("<title>로그인</title>");
     out.println("</head>");
     out.println("<body>");

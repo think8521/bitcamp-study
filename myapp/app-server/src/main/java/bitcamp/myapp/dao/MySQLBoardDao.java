@@ -60,4 +60,10 @@ public class MySQLBoardDao implements BoardDao {
     return sqlSession.update("bitcamp.myapp.dao.BoardDao.delete", board);
   }
 
+  @Override
+  public int insertFiles(Board board) {
+    SqlSession sqlSession = sqlSessionFactory.openSession(false);
+    return sqlSession.insert("bitcamp.myapp.dao.BoardDao.insertFiles", board);
+  }
+
 }
