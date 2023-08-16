@@ -41,6 +41,7 @@ public class BoardAddServlet extends HttpServlet {
       board.setCategory(Integer.parseInt(request.getParameter("category")));
 
       String uploadDir = request.getServletContext().getRealPath("/upload/board/");
+      System.out.println(uploadDir);
 
       ArrayList<AttachedFile> attachedFiles = new ArrayList<>();
 
@@ -71,8 +72,10 @@ public class BoardAddServlet extends HttpServlet {
       try {
         InitServlet.boardDao.insert(board);
         // System.out.println(board.getNo());
-        InitServlet.boardDao.insertFiles(board);
-
+        if (attachedFiles.size() > 0) {
+          int count = InitServlet.boardDao.insertFiles(board);
+          System.out.println(count);
+        }
         InitServlet.sqlSessionFactory.openSession(false).commit();
         out.println("<p>등록 성공입니다!</p>");
 
