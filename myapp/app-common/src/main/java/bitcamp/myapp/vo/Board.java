@@ -20,10 +20,18 @@ public class Board implements Serializable {
   // private long createdDate;
 
 
+  @Override
+  public String toString() {
+    return "Board [no=" + no + ", title=" + title + ", content=" + content + ", writer=" + writer
+        + ", password=" + password + ", category=" + category + ", viewCount=" + viewCount
+        + ", createdDate=" + createdDate + ", attachedFiles=" + attachedFiles + "]";
+  }
+
 
   public int getNo() {
     return no;
   }
+
 
   @Override
   public int hashCode() {
