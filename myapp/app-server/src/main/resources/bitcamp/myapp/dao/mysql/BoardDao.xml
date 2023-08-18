@@ -41,7 +41,7 @@
     select
       b.board_no,
       b.title,
-      m.name
+      m.name,
       b.view_count,
       b.created_date,
       b.category,
