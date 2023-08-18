@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'eclipse-wtp'
+    //id 'eclipse-wtp'
     id 'war'
 }
 
@@ -65,6 +65,7 @@ tasks.withType(JavaCompile) {
 }
 
 // eclipse 프로젝트 이름을 설정하기
+/*
 eclipse {
     project {
         name = "think myapp-server"
@@ -86,6 +87,7 @@ eclipse {
         }
     }
 }
+ */
 
 war {
     archiveBaseName = "myapp"

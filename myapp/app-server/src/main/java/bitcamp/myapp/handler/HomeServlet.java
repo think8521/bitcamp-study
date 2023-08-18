@@ -28,7 +28,7 @@ public class HomeServlet extends HttpServlet {
     out.println("<title>bitcamp</title>");
     out.println("</head>");
     out.println("<body>");
-    out.println("<h1>MyApp4</h1>");
+    out.println("<h1>MyApp７</h1>");
     out.println("<ul>");
 
     Member loginUser = (Member) request.getSession().getAttribute("loginUser");
