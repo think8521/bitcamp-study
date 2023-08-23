@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import bitcamp.myapp.vo.Member;
 
 @WebServlet("/auth/login")
@@ -16,7 +17,7 @@ public class LoginServlet extends HttpServlet {
 
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
-      throws ServletException, IOException {
+          throws ServletException, IOException {
 
     Member m = new Member();
     m.setEmail(request.getParameter("email"));
@@ -30,20 +31,9 @@ public class LoginServlet extends HttpServlet {
       return;
     }
 
-    response.setContentType("text/html;charset=UTF-8");
-    PrintWriter out = response.getWriter();
-    out.println("<!DOCTYPE html>");
-    out.println("<html>");
-    out.println("<head>");
-    out.println("<meta charset='UTF-8'>");
-    out.println("<meta http-equiv='refresh' content='1;url=/index.html'>");
-    out.println("<title>로그인</title>");
-    out.println("</head>");
-    out.println("<body>");
-    out.println("<h1>로그인</h1>");
-    out.println("<p>회원 정보가 일치하지 않습니다.</p>");
-    out.println("</body>");
-    out.println("</html>");
+    request.setAttribute("message", "회원 정보가 일치하지 않습니다.");
+    request.setAttribute("refresh", "1;url=/auth/form.html");
 
+    request.getRequestDispatcher("/error").forward(request, response);
   }
 }

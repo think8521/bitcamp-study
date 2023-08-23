@@ -3,6 +3,7 @@ package bitcamp.util;
 import java.io.InputStream;
 import java.util.UUID;
 import javax.servlet.http.Part;
+
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.client.builder.AwsClientBuilder;
@@ -17,11 +18,11 @@ public class NcpObjectStorageService {
 
   public NcpObjectStorageService(NcpConfig ncpConfig) {
     s3 = AmazonS3ClientBuilder.standard()
-        .withEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration(
-            ncpConfig.getEndPoint(), ncpConfig.getRegionName()))
-        .withCredentials(new AWSStaticCredentialsProvider(
-            new BasicAWSCredentials(ncpConfig.getAccessKey(), ncpConfig.getSecretKey())))
-        .build();
+            .withEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration(
+                    ncpConfig.getEndPoint(), ncpConfig.getRegionName()))
+            .withCredentials(new AWSStaticCredentialsProvider(
+                    new BasicAWSCredentials(ncpConfig.getAccessKey(), ncpConfig.getSecretKey())))
+            .build();
   }
 
   public String uploadFile(String bucketName, String dirPath, Part part) {
@@ -36,8 +37,8 @@ public class NcpObjectStorageService {
       objectMetadata.setContentType(part.getContentType());
 
       PutObjectRequest objectRequest =
-          new PutObjectRequest(bucketName, dirPath + filename, fileIn, objectMetadata)
-              .withCannedAcl(CannedAccessControlList.PublicRead);
+              new PutObjectRequest(bucketName, dirPath + filename, fileIn, objectMetadata)
+                      .withCannedAcl(CannedAccessControlList.PublicRead);
 
       s3.putObject(objectRequest);
 

@@ -6,6 +6,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import bitcamp.myapp.vo.AttachedFile;
 import bitcamp.myapp.vo.Board;
 import bitcamp.myapp.vo.Member;
@@ -15,10 +16,9 @@ public class BoardFileDeleteServlet extends HttpServlet {
 
   private static final long serialVersionUID = 1L;
 
-
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
-      throws ServletException, IOException {
+          throws ServletException, IOException {
 
     Member loginUser = (Member) request.getSession().getAttribute("loginUser");
     if (loginUser == null) {
@@ -31,11 +31,11 @@ public class BoardFileDeleteServlet extends HttpServlet {
 
     // 첨부파일 번호로 첨부파일 데이터를 가져온다.
     AttachedFile attachedFile = InitServlet.boardDao.findFileBy(fileNo);
-    // System.out.println(attachedFile);
+    //    System.out.println(attachedFile);
 
     // 첨부파일 데이터에 있는 게시글 번호로 게시글 데이터를 가져온다.
     Board board = InitServlet.boardDao.findBy(category, attachedFile.getBoardNo());
-    // System.out.println(board);
+    //    System.out.println(board);
 
     // 게시글 데이터의 작성자와 로그인 한 작성자가 일치하는지 검사한다.
     if (board.getWriter().getNo() != loginUser.getNo()) {
@@ -57,5 +57,14 @@ public class BoardFileDeleteServlet extends HttpServlet {
     }
   }
 }
+
+
+
+
+
+
+
+
+
 
 

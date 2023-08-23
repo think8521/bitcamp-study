@@ -4,19 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ee9aad33-2822-46aa-86b3-722cf3fe390d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../app-common/src/main/java/bitcamp/myapp/vo/Member.java" beforeDir="false" afterPath="$PROJECT_DIR$/../app-common/src/main/java/bitcamp/myapp/vo/Member.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/doc/dbmodel.exerd" beforeDir="false" afterPath="$PROJECT_DIR$/doc/dbmodel.exerd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/doc/ddl3.sql" beforeDir="false" afterPath="$PROJECT_DIR$/doc/ddl3.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bitcamp/myapp/filter/CharacterEncodingFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bitcamp/myapp/filter/CharacterEncodingFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bitcamp/myapp/handler/MemberAddServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bitcamp/myapp/handler/MemberAddServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bitcamp/myapp/handler/MemberDetailServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bitcamp/myapp/handler/MemberDetailServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bitcamp/myapp/handler/MemberListServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bitcamp/myapp/handler/MemberListServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bitcamp/myapp/handler/MemberUpdateServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bitcamp/myapp/handler/MemberUpdateServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/bitcamp/myapp/dao/mysql/BoardDao.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/bitcamp/myapp/dao/mysql/BoardDao.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/bitcamp/myapp/dao/mysql/MemberDao.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/bitcamp/myapp/dao/mysql/MemberDao.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/member/form.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/member/form.html" afterDir="false" />
-    </list>
+    <list default="true" id="ee9aad33-2822-46aa-86b3-722cf3fe390d" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -30,23 +18,23 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 8
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
   <component name="ProjectId" id="2U90nvGBr95fRdvCi6vGA1sE4Qd" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "android.gradle.sync.needed": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "C:/Users/think/git/bitcamp-study/myapp/settings.gradle"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;android.gradle.sync.needed&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/think/git/bitcamp-study/myapp/settings.gradle&quot;
   }
-}]]></component>
+}</component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
