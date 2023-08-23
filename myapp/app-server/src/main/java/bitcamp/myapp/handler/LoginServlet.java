@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import bitcamp.myapp.dao.MemberDao;
 import bitcamp.myapp.vo.Member;
 
 @WebServlet("/auth/login")
@@ -33,7 +34,8 @@ public class LoginServlet extends HttpServlet {
       response.addCookie(cookie);
     }
 
-    Member loginUser = InitServlet.memberDao.findByEmailAndPassword(m);
+    MemberDao memberDao = (MemberDao) this.getServletContext().getAttribute("memberDao");
+    Member loginUser = memberDao.findByEmailAndPassword(m);
     if (loginUser != null) {
       // 로그인 정보를 다른 요청에서도 사용할 있도록 세션 보관소에 담아 둔다.
       request.getSession().setAttribute("loginUser", loginUser);

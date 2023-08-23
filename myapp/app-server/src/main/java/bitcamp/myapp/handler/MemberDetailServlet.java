@@ -8,7 +8,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import bitcamp.myapp.dao.BoardDao;
+import bitcamp.myapp.dao.MemberDao;
 import bitcamp.myapp.vo.Member;
+import bitcamp.util.NcpObjectStorageService;
+import org.apache.ibatis.session.SqlSessionFactory;
 
 @WebServlet("/member/detail")
 public class MemberDetailServlet extends HttpServlet {
@@ -19,7 +23,13 @@ public class MemberDetailServlet extends HttpServlet {
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
           throws ServletException, IOException {
 
-    Member member = InitServlet.memberDao.findBy(Integer.parseInt(request.getParameter("no")));
+    MemberDao memberDao = (MemberDao) this.getServletContext().getAttribute("memberDao");
+    BoardDao boardDao = (BoardDao) this.getServletContext().getAttribute("boardDao");
+    NcpObjectStorageService ncpObjectStorageService = (NcpObjectStorageService) this.getServletContext().getAttribute("ncpObjectStorageService");
+    SqlSessionFactory sqlSessionFactory = (SqlSessionFactory) this.getServletContext().getAttribute("sqlSessionFactory");
+
+    Member member =
+            memberDao.findBy(Integer.parseInt(request.getParameter("no")));
 
     response.setContentType("text/html;charset=UTF-8");
     PrintWriter out = response.getWriter();
