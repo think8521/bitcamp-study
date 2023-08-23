@@ -46,7 +46,7 @@ public class MemberListServlet extends HttpServlet {
       out.printf("<tr>"
                       + " <td>%d</td>"
                       + " <td>"
-                      + "<img src='http://mvsenqskbqzl19010704.cdn.ntruss.com/member/%s?type=f&w=30&h=40&faceopt=true&ttype=jpg'>"
+                      + "<img src='http://msgknwsumzva19010734.cdn.ntruss.com/member/%s?type=f&w=30&h=40&faceopt=true&ttype=jpg'>"
                       + "<a href='/member/detail?no=%d'>%s</a></td>"
                       + " <td>%s</td></tr>\n",
               m.getNo(), m.getPhoto(), m.getNo(), m.getName(), m.getEmail());
