@@ -1,21 +1,16 @@
 <%@ page
     language="java"
     pageEncoding="UTF-8"
-    contentType="text/html;charset=UTF-8"%>
-<%@ page import="java.io.IOException"%>
+    contentType="text/html;charset=UTF-8"
+    trimDirectiveWhitespaces="true"
+    errorPage="/error.jsp"%>
 <%@ page import="java.text.SimpleDateFormat"%>
 <%@ page import="java.util.List"%>
-<%@ page import="bitcamp.myapp.dao.BoardDao"%>
 <%@ page import="bitcamp.myapp.vo.Board"%>
-<%@ page import="bitcamp.util.NcpObjectStorageService"%>
-<%@ page import="org.apache.ibatis.session.SqlSessionFactory"%>
-
-  <%!
-  // declaration element
-  SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
-  %>
 
 <%
+    request.setAttribute("refresh", "2;url=list.jsp?category=" + request.getParameter("category"));
+
     // scriptlet (scripting element)
     int category = Integer.parseInt(request.getParameter("category"));
 %>
@@ -31,37 +26,39 @@
 
     <h1>게시글 목록-1</h1>
     <div style='margin:5px;'>
-        <a href='/board/form.jsp?category=<%=category%>'>새 글</a>
+        <a href='/board/form.jsp?category=${param.category}'>새 글</a>
     </div>
     <table border='1'>
         <thead>
             <tr><th>번호</th> <th>제목</th> <th>작성자</th> <th>조회수</th> <th>등록일</th></tr>
         </thead>
 
-        <tbody>
+<jsp:useBean id="boardDao" type="bitcamp.myapp.dao.BoardDao" scope="application"/>
+
         <%
-            BoardDao boardDao = (BoardDao) this.getServletContext().getAttribute("boardDao");
             List<Board> list = boardDao.findAll(category);
         %>
+        <tbody>
 
         <%
             for (Board board : list) {
+            pageContext.setAttribute("board", board);
         %>
               <tr>
-                <td><%=board.getNo()%></td>
+                <td>${board.no}</td>
                   <td>
-                    <a href='/board/detail?category=<%=board.getCategory()%>&no=<%=board.getNo()%>'>
-                        <%=(board.getTitle().length() > 0 ? board.getTitle() : "제목없음")%>
+                    <a href='/board/detail.jsp?category=${board.category}&no=${board.no}'>
+                        ${board.title.length() > 0 ? board.title : "제목없음"}
                     </a>
                   </td>
                   <td>
-                    <%=board.getWriter().getName()%>
+                    ${voard.writer.name}
                   </td>
                   <td>
-                    <%=board.getViewCount()%>
+                    ${board.viewCount}
                   </td>
                   <td>
-                    <%=dateFormatter.format(board.getCreatedDate())%>
+                    ${simpleDateFormatter.format(board.createdDate)}
                   </td>
               </tr>
 
@@ -76,7 +73,7 @@
 
 </body>
 </html>
-%>
+
 
 
 
