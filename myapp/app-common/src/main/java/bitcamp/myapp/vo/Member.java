@@ -20,7 +20,18 @@ public class Member implements Serializable {
   private Date createdDate;
   private String photo;
 
-
+  @Override
+  public String toString() {
+    return "Member{" +
+            "no=" + no +
+            ", name='" + name + '\'' +
+            ", email='" + email + '\'' +
+            ", password='" + password + '\'' +
+            ", gender=" + gender +
+            ", createdDate=" + createdDate +
+            ", photo='" + photo + '\'' +
+            '}';
+  }
 
   @Override
   public int hashCode() {
@@ -96,7 +107,6 @@ public class Member implements Serializable {
   public void setPhoto(String photo) {
     this.photo = photo;
   }
-
 
 
 }
