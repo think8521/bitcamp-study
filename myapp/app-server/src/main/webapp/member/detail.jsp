@@ -3,12 +3,7 @@
     pageEncoding="UTF-8"
     contentType="text/html;charset=UTF-8"
     trimDirectiveWhitespaces="true" %>
-<%@ page import="bitcamp.myapp.vo.Member"%>
-
-<jsp:useBean id="memberDao" type="bitcamp.myapp.dao.MemberDao" scope="application"/>
-<%
-    Member member = memberDao.findBy(Integer.parseInt(request.getParameter("no")));
-%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
 <html>
@@ -21,23 +16,22 @@
 <jsp:include page="../header.jsp"/>
 
 <h1>회원</h1>
-
-<%
-    if (member == null) {
-%>
-<p>해당 번호의 회원이 없습니다!</p>
-<%
-    } else {
-%>
+<c:if test="${empty member}">
+    <p>해당 번호의 회원이 없습니다!</p>
+</c:if>
+<c:if test="${not empty member}">
   <form action='/member/update.jsp' method='post' enctype='multipart/form-data'>
   <table border='1'>
   <tr>
       <th style='width:120px;'>사진</th>
-      <td style='width:300px;'><%=
-          member.getPhoto() == null ? "<img style='height:80px' src='/images/avatar.png'>" :
-            String.format("<a href='https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-118/member/%s'>"
-            + "<img src='http://mvsenqskbqzl19010704.cdn.ntruss.com/member/%1$s?type=f&w=60&h=80&faceopt=true&ttype=jpg'>"
-            + "</a>", member.getPhoto())%>
+      <td style='width:300px;'>
+        <c:if test="${empty member.photo}">
+          <img style='height:80px' src='/images/avatar.png'>
+        </c:if>
+        <c:if test="${not empty member.photo}">
+            <a href='https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-118/member/${member.photo}'>
+                <img src='http://mvsenqskbqzl19010704.cdn.ntruss.com/member/${member.photo}?type=f&w=60&h=80&faceopt=true&ttype=jpg'>
+            </a>
           <input type='file' name='photo'></td></tr>
   <tr>
       <th style='width:120px;'>번호</th>
@@ -54,19 +48,17 @@
   <tr>
       <th>성별</th>
       <td><select name='gender'>
-          <option value='M' <%=member.getGender() == 'M' ? "selected" : ""%>>남자</option>
-          <option value='W' <%=member.getGender() == 'W' ? "selected" : ""%>>여자</option></select></td></tr>
+          <option value='M' ${String.valueOf(member.getGender()) == 'M' ? "selected" : ""}>남자</option>
+          <option value='W' ${String.valueOf(member.getGender()) == 'W' ? "selected" : ""}>여자</option></select></td></tr>
   </table>
   <div>
   <button>변경</button>
   <button type='reset'>초기화</button>
-      <a href='/member/delete.jsp?no=<%=member.getNo()%>'>삭제</a>
-  <a href='/member/list.jsp'>목록</a>
+      <a href='/member/delete?no=${member.no}'>삭제</a>
+  <a href='/member/list'>목록</a>
   </div>
   </form>
-<%
-    }
-%>
+</c:if>
 <jsp:include page="../footer.jsp"/>
 
 </body>
