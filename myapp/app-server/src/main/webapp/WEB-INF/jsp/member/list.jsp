@@ -19,7 +19,7 @@
 
 <h1>회원 목록</h1>
 <div style='margin:5px;'>
-<a href='/member/add'>새 회원</a>
+<a href='add'>새 회원</a>
 </div>
 <table border='1'>
 <thead>
@@ -34,7 +34,7 @@
         <td><%=m.getNo()%></td>
         <td>
             <img src='http://msgknwsumzva19010734.cdn.ntruss.com/member/%s?type=f&w=30&h=40&faceopt=true&ttype=jpg'>
-            <a href='/member/detail.jsp?no=<%=m.getNo()%>'><%=m.getName()%></a></td>
+            <a href='detail?no=<%=m.getNo()%>'><%=m.getName()%></a></td>
         <td><%=m.getEmail()%></td>
     </tr>
 

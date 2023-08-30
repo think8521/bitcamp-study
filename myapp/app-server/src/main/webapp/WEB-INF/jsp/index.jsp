@@ -12,11 +12,11 @@
 </head>
 <body>
 
-<jsp:include page="/header.jsp"/>
+<jsp:include page="/WEB-INF/jsp/header.jsp"/>
 <h1>MyApp(JSP)</h1>
 <p>실습 프로젝트 입니다</p>
 
-<jsp:include page="/footer.jsp"/>
+<jsp:include page="/WEB-INF/jsp/footer.jsp"/>
 
 </body>
 </html>

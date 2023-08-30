@@ -20,7 +20,7 @@
     <p>해당 번호의 회원이 없습니다!</p>
 </c:if>
 <c:if test="${not empty member}">
-  <form action='/member/update.jsp' method='post' enctype='multipart/form-data'>
+  <form action='update' method='post' enctype='multipart/form-data'>
   <table border='1'>
   <tr>
       <th style='width:120px;'>사진</th>
@@ -29,19 +29,21 @@
           <img style='height:80px' src='/images/avatar.png'>
         </c:if>
         <c:if test="${not empty member.photo}">
-            <a href='https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-118/member/${member.photo}'>
+            <a href='https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-06/member/${member.photo}'>
                 <img src='http://mvsenqskbqzl19010704.cdn.ntruss.com/member/${member.photo}?type=f&w=60&h=80&faceopt=true&ttype=jpg'>
             </a>
+        </c:if>
+
           <input type='file' name='photo'></td></tr>
   <tr>
       <th style='width:120px;'>번호</th>
-      <td style='width:300px;'><input type='text' name='no' value='<%=member.getNo()%>' readonly></td></tr>
+      <td style='width:300px;'><input type='text' name='no' value='${member.no}' readonly></td></tr>
   <tr>
       <th>이름</th>
-      <td><input type='text' name='name' value='<%=member.getName()%>'></td></tr>
+      <td><input type='text' name='name' value='${member.name}'></td></tr>
   <tr>
       <th>이메일</th>
-      <td><input type='email' name='email' value='<%=member.getEmail()%>'></td></tr>
+      <td><input type='email' name='email' value='${member.email}'></td></tr>
   <tr>
       <th>암호</th>
       <td><input type='password' name='password'></td></tr>
@@ -54,8 +56,8 @@
   <div>
   <button>변경</button>
   <button type='reset'>초기화</button>
-      <a href='/member/delete?no=${member.no}'>삭제</a>
-  <a href='/member/list'>목록</a>
+      <a href='delete?no=${member.no}'>삭제</a>
+  <a href='list'>목록</a>
   </div>
   </form>
 </c:if>
