@@ -1,4 +1,4 @@
-package bitcamp.util;
+package bitcamp.myapp.config;
 
 public class NcpConfig {
   private String endPoint = "https://kr.object.ncloudstorage.com";
@@ -6,6 +6,9 @@ public class NcpConfig {
   private String accessKey = System.getProperty("accessKey");
   private String secretKey = System.getProperty("secretKey");
 
+  public NcpConfig() {
+    System.out.println("NcpConfig() 호출됨!");
+  }
 
   public String getEndPoint() {
     return endPoint;

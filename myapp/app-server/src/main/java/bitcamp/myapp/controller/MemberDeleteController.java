@@ -2,11 +2,13 @@ package bitcamp.myapp.controller;
 
 import bitcamp.myapp.dao.MemberDao;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+@Component("/member/delete")
 public class MemberDeleteController implements PageController {
 
   MemberDao memberDao;

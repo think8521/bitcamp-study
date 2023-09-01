@@ -1,10 +1,12 @@
 package bitcamp.myapp.controller;
 
 import bitcamp.myapp.dao.MemberDao;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+@Component("/member/detail")
 public class MemberDetailController implements PageController {
 
   MemberDao memberDao;
