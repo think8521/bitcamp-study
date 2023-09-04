@@ -5,8 +5,11 @@ import bitcamp.myapp.service.NcpObjectStorageService;
 import bitcamp.myapp.vo.AttachedFile;
 import bitcamp.myapp.vo.Board;
 import bitcamp.myapp.vo.Member;
-import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -18,12 +21,12 @@ import java.util.ArrayList;
 public class BoardUpdateController implements PageController {
 
   BoardDao boardDao;
-  SqlSessionFactory sqlSessionFactory;
+  PlatformTransactionManager txManager;
   NcpObjectStorageService ncpObjectStorageService;
 
-  public BoardUpdateController(BoardDao boardDao, SqlSessionFactory sqlSessionFactory, NcpObjectStorageService ncpObjectStorageService) {
+  public BoardUpdateController(BoardDao boardDao, PlatformTransactionManager txManager, NcpObjectStorageService ncpObjectStorageService) {
     this.boardDao = boardDao;
-    this.sqlSessionFactory = sqlSessionFactory;
+    this.txManager = txManager;
     this.ncpObjectStorageService = ncpObjectStorageService;
   }
 
@@ -36,6 +39,11 @@ public class BoardUpdateController implements PageController {
       return "redirect:../auth/login";
     }
 
+    DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+    def.setName("tx1");
+    def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+
+    TransactionStatus status = txManager.getTransaction(def);
     try {
       Board board = new Board();
       board.setWriter(loginUser);
@@ -64,12 +72,12 @@ public class BoardUpdateController implements PageController {
           System.out.println(count);
         }
 
-        sqlSessionFactory.openSession(false).commit();
+        txManager.commit(status);
         return "redirect:list?category=" + request.getParameter("category");
       }
 
     } catch (Exception e) {
-      sqlSessionFactory.openSession(false).rollback();
+      txManager.rollback(status);
       request.setAttribute("refresh", "2;url=detail?category=" +
               request.getParameter("category") + "&no=" + request.getParameter("no"));
 

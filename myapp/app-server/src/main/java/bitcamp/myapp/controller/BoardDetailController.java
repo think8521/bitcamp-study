@@ -2,8 +2,11 @@ package bitcamp.myapp.controller;
 
 import bitcamp.myapp.dao.BoardDao;
 import bitcamp.myapp.vo.Board;
-import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -13,15 +16,21 @@ import javax.servlet.http.HttpServletResponse;
 public class BoardDetailController implements PageController {
 
   BoardDao boardDao;
-  SqlSessionFactory sqlSessionFactory;
+  PlatformTransactionManager txManager;
 
-  public BoardDetailController(BoardDao boardDao, SqlSessionFactory sqlSessionFactory) {
+  public BoardDetailController(BoardDao boardDao, PlatformTransactionManager txManager) {
     this.boardDao = boardDao;
-    this.sqlSessionFactory = sqlSessionFactory;
+    this.txManager = txManager;
   }
 
   @Override
   public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+    DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+    def.setName("tx1");
+    def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+
+    TransactionStatus status = txManager.getTransaction(def);
     try {
       int category = Integer.parseInt(request.getParameter("category"));
       int no = Integer.parseInt(request.getParameter("no"));
@@ -30,12 +39,12 @@ public class BoardDetailController implements PageController {
       if (board != null) {
         board.setViewCount(board.getViewCount() + 1);
         boardDao.updateCount(board);
-        sqlSessionFactory.openSession(false).commit();
+        txManager.commit(status);
         request.setAttribute("board", board);
       }
       return "/WEB-INF/jsp/board/detail.jsp";
     } catch (Exception e) {
-      sqlSessionFactory.openSession(false).rollback();
+      txManager.rollback(status);
       request.setAttribute("refresh", "5;url=/board/list?category=" + request.getParameter("category"));
       throw new ServletException(e);
     }
