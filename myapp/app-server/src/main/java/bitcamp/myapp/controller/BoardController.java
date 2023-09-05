@@ -8,11 +8,11 @@ import bitcamp.myapp.vo.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import java.util.ArrayList;
+import java.util.Map;
 
 @Controller
 public class BoardController {
@@ -32,7 +32,7 @@ public class BoardController {
   public String add(
           Board board,
           @RequestParam("files") Part[] parts,
-          HttpServletRequest request,
+          Map<String, Object> model,
           HttpSession session) throws Exception {
 
     Member loginUser = (Member) session.getAttribute("loginUser");
@@ -58,8 +58,8 @@ public class BoardController {
       return "redirect:list?category=" + board.getCategory();
 
     } catch (Exception e) {
-      request.setAttribute("message", "게시글 등록 오류!");
-      request.setAttribute("refresh", "2;url=list?category=" + board.getCategory());
+      model.put("message", "게시글 등록 오류!");
+      model.put("refresh", "2;url=list?category=" + board.getCategory());
       throw e;
     }
   }
@@ -67,7 +67,8 @@ public class BoardController {
   @RequestMapping("/board/delete")
   public String delete(
           @RequestParam("no") int no,
-          HttpServletRequest request,
+          @RequestParam("category") int category,
+          Map<String, Object> model,
           HttpSession session) throws Exception {
 
     Member loginUser = (Member) session.getAttribute("loginUser");
@@ -82,11 +83,11 @@ public class BoardController {
         throw new Exception("해당 번호의 게시글이 없거나 삭제 권한이 없습니다.");
       } else {
         boardService.delete(b.getNo());
-        return "redirect:list?category=" + request.getParameter("category");
+        return "redirect:list?category=" + category;
       }
 
     } catch (Exception e) {
-      request.setAttribute("refresh", "2;url=list?category=" + request.getParameter("category"));
+      model.put("refresh", "2;url=list?category=" + category);
       throw e;
     }
   }
@@ -94,18 +95,19 @@ public class BoardController {
   @RequestMapping("/board/detail")
   public String detail(
           @RequestParam("no") int no,
-          HttpServletRequest request) throws Exception {
+          @RequestParam("category") int category,
+          Map<String, Object> model) throws Exception {
 
     try {
       Board board = boardService.get(no);
       if (board != null) {
         boardService.increaseViewCount(no);
-        request.setAttribute("board", board);
+        model.put("board", board);
       }
       return "/WEB-INF/jsp/board/detail.jsp";
 
     } catch (Exception e) {
-      request.setAttribute("refresh", "5;url=/board/list?category=" + request.getParameter("category"));
+      model.put("refresh", "5;url=/board/list?category=" + category);
       throw e;
     }
   }
@@ -113,14 +115,14 @@ public class BoardController {
   @RequestMapping("/board/list")
   public String list(
           @RequestParam("category") int category,
-          HttpServletRequest request, HttpServletResponse response) throws Exception {
+          Map<String, Object> model, HttpServletResponse response) throws Exception {
     try {
-      request.setAttribute("list", boardService.list(category));
+      model.put("list", boardService.list(category));
 
       return "/WEB-INF/jsp/board/list.jsp";
 
     } catch (Exception e) {
-      request.setAttribute("refresh", "1;url=/");
+      model.put("refresh", "1;url=/");
       throw e;
     }
   }
@@ -129,7 +131,7 @@ public class BoardController {
   public String update(
           Board board,
           @RequestParam("files") Part[] parts,
-          HttpServletRequest request,
+          Map<String, Object> model,
           HttpSession session) throws Exception {
 
     Member loginUser = (Member) session.getAttribute("loginUser");
@@ -159,7 +161,7 @@ public class BoardController {
       return "redirect:list?category=" + b.getCategory();
 
     } catch (Exception e) {
-      request.setAttribute("refresh", "2;url=detail?&no=" + board.getNo());
+      model.put("refresh", "2;url=detail?&no=" + board.getNo());
 
       throw e;
     }
@@ -168,7 +170,7 @@ public class BoardController {
   @RequestMapping("/board/fileDelete")
   public String fileDelete(
           @RequestParam("no") int no,
-          HttpServletRequest request,
+          Map<String, Object> model,
           HttpSession session) throws Exception {
 
     Member loginUser = (Member) session.getAttribute("loginUser");
@@ -188,11 +190,11 @@ public class BoardController {
       if (boardService.deleteAttachedFile(no) == 0) {
         throw new Exception("해당 번호의 첨부파일이 없습니다.");
       } else {
-        return "redirect:detail?&no=" + board.getNo();
+        return "redirect:detail?category=" + board.getCategory() + "&no=" + board.getNo();
       }
 
     } catch (Exception e) {
-      request.setAttribute("refresh", "2;url=detail?&no=" + board.getNo());
+      model.put("refresh", "2;url=detail?category=" + board.getCategory() + "&no=" + board.getNo());
       throw e;
     }
   }

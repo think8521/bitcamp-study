@@ -19,6 +19,7 @@ import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 @WebServlet(
         value = "/app/*",
@@ -82,8 +83,17 @@ public class DispatcherServlet extends HttpServlet {
 
     // request handler 호출하기
     try {
-      Object[] arguments = prepareArguments(requestHandlerMapping.handler, request, response);
+      Map<String, Object> model = new HashMap<>();
+      Object[] arguments = prepareArguments(requestHandlerMapping.handler, request, response, model);
+
+      // request handler 호출
       String viewUrl = (String) requestHandlerMapping.handler.invoke(requestHandlerMapping.controller, arguments);
+
+      // model 객체에 저장된 값을 Servlet 보관소로 옮긴다.
+      Set<Map.Entry<String, Object>> entrySet = model.entrySet();
+      for (Map.Entry<String, Object> entry : entrySet) {
+        request.setAttribute(entry.getKey(), entry.getValue());
+      }
 
       if (viewUrl.startsWith("redirect:")) {
         response.sendRedirect(viewUrl.substring(9)); // 예) redirect:/app/board/list
@@ -98,7 +108,11 @@ public class DispatcherServlet extends HttpServlet {
 
   }
 
-  private Object[] prepareArguments(Method handler, HttpServletRequest request, HttpServletResponse response) throws Exception {
+  private Object[] prepareArguments(
+          Method handler,
+          HttpServletRequest request,
+          HttpServletResponse response,
+          Map<String, Object> model) throws Exception {
     Parameter[] params = handler.getParameters();
     ArrayList<Object> arguments = new ArrayList<>();
 
@@ -117,6 +131,8 @@ public class DispatcherServlet extends HttpServlet {
         arguments.add(Integer.parseInt(request.getParameter(p.getAnnotation(RequestParam.class).value())));
       } else if (p.getType() == char.class) {
         arguments.add(request.getParameter(p.getAnnotation(RequestParam.class).value()).charAt(0));
+      } else if (p.getType() == Map.class) {
+        arguments.add(model);
       } else if (p.getType() == Part.class) {
         arguments.add(request.getPart(p.getAnnotation(RequestParam.class).value()));
       } else if (p.getType() == Part[].class) {
