@@ -31,7 +31,7 @@ public class BoardController {
     Member loginUser = (Member) request.getSession().getAttribute("loginUser");
     if (loginUser == null) {
       request.getParts(); // 일단 클라이언트가 보낸 파일을 읽는다. 응답하기 위해
-      return "redirect:../auth/login";
+      return "redirect:../auth/form";
     }
 
     try {
@@ -68,7 +68,7 @@ public class BoardController {
 
     Member loginUser = (Member) request.getSession().getAttribute("loginUser");
     if (loginUser == null) {
-      return "redirect:../auth/login";
+      return "redirect:../auth/form";
     }
 
     try {
@@ -125,7 +125,7 @@ public class BoardController {
     Member loginUser = (Member) request.getSession().getAttribute("loginUser");
     if (loginUser == null) {
       request.getParts(); // 일단 클라이언트가 보낸 파일을 읽는다. 응답하기 위해
-      return "redirect:../auth/login";
+      return "redirect:../auth/form";
     }
 
     try {
@@ -164,7 +164,7 @@ public class BoardController {
 
     Member loginUser = (Member) request.getSession().getAttribute("loginUser");
     if (loginUser == null) {
-      return "redirect:../auth/login";
+      return "redirect:../auth/form";
     }
 
     Board board = null;
