@@ -3,24 +3,22 @@ package bitcamp.myapp.service;
 import bitcamp.myapp.dao.MemberDao;
 import bitcamp.myapp.vo.Member;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.support.TransactionTemplate;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 public class DefaultMemberServlce implements MemberService {
   MemberDao memberDao;
-  TransactionTemplate txTemplate;
 
-  public DefaultMemberServlce(MemberDao memberDao, PlatformTransactionManager txManager) {
+  public DefaultMemberServlce(MemberDao memberDao) {
     this.memberDao = memberDao;
-    this.txTemplate = new TransactionTemplate(txManager);
   }
 
+  @Transactional
   @Override
   public int add(Member member) throws Exception {
-    return txTemplate.execute(status -> memberDao.insert(member));
+    return memberDao.insert(member);
   }
 
   @Override
@@ -38,13 +36,15 @@ public class DefaultMemberServlce implements MemberService {
     return memberDao.findByEmailAndPassword(email, password);
   }
 
+  @Transactional
   @Override
   public int update(Member member) throws Exception {
-    return txTemplate.execute(status -> memberDao.update(member));
+    return memberDao.update(member);
   }
 
+  @Transactional
   @Override
   public int delete(int memberNo) throws Exception {
-    return txTemplate.execute(status -> memberDao.delete(memberNo));
+    return memberDao.delete(memberNo);
   }
 }

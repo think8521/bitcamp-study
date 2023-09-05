@@ -11,17 +11,19 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 
 // Application을 실행하는데 필요한 객체를 설정하는 일을 한다.
-//
+
 @ComponentScan(basePackages = {
         "bitcamp.myapp.dao",
         "bitcamp.myapp.controller",
         "bitcamp.myapp.service"})
 @PropertySource({"classpath:bitcamp/myapp/config/ncloud/jdbc.properties"})
 @MapperScan("bitcamp.myapp.dao") // Mybatis가 자동으로 생성할 DAO 객체의 인터페이스 패키지 지정
+@EnableTransactionManagement // @Transctional 애노테이션을 처리할 객체 등록
 public class AppConfig {
 
   public AppConfig() {
@@ -62,6 +64,7 @@ public class AppConfig {
           @Value("${jdbc.username}") String username,
           @Value("${jdbc.password}") String password) {
     System.out.println("AppConfig.dataSource() 호출됨!");
+    
     DriverManagerDataSource ds = new DriverManagerDataSource();
     ds.setDriverClassName(driver);
     ds.setUrl(url);
@@ -78,3 +81,6 @@ public class AppConfig {
   }
 
 }
+
+//
+
