@@ -34,7 +34,7 @@
             </a>
         </c:if>
 
-          <input type='file' name='photo'></td></tr>
+          <input type='file' name='photofile'></td></tr>
   <tr>
       <th style='width:120px;'>번호</th>
       <td style='width:300px;'><input type='text' name='no' value='${member.no}' readonly></td></tr>
