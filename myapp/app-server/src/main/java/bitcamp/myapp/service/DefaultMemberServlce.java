@@ -9,6 +9,11 @@ import java.util.List;
 
 @Service
 public class DefaultMemberServlce implements MemberService {
+
+  {
+    System.out.println("DefaultMemberServlce 생성됨!");
+  }
+
   MemberDao memberDao;
 
   public DefaultMemberServlce(MemberDao memberDao) {

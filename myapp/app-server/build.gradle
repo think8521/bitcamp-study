@@ -7,7 +7,6 @@ plugins {
 repositories {
     mavenCentral()
 }
-
 dependencies {
     // 서브 프로젝트의 클래스를 사용하기
     implementation project(':app-common')
@@ -28,6 +27,9 @@ dependencies {
     // Spring WebMVC 라이브러리
     // jakarta 버전 //implementation 'org.springframework:spring-webmvc:6.0.11'
     implementation 'org.springframework:spring-webmvc:5.3.29'
+
+    // ASPECTJ Weaver 라이브러리
+    implementation 'org.aspectj:aspectjweaver:1.9.20.1'
 
     // Spring IoC 컨테이너 라이브러리
     //implementation 'org.springframework:spring-context:5.3.29'
@@ -62,6 +64,7 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.1'
     implementation 'com.google.guava:guava:31.1-jre'
 }
+
 
 java {
     toolchain {
