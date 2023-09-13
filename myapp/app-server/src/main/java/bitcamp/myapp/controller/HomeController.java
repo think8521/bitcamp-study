@@ -10,6 +10,7 @@ public class HomeController {
   }
 
   @GetMapping("/")
+//  @ResponseBody
   public String home() throws Exception {
     return "index";
   }
