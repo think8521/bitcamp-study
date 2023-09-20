@@ -48,7 +48,9 @@ public class Controller03_2 {
   @GetMapping(value="h2", produces="text/plain;charset=UTF-8")
   @ResponseBody
   public String handler2(HttpSession session) {
-    return String.format("name2=%s, age2=%s, tel2=%s", 
+    return String.format("name=%s, age=%s, name2=%s, age2=%s, tel2=%s",
+        session.getAttribute("name"),
+        session.getAttribute("age"),
         session.getAttribute("name2"),
         session.getAttribute("age2"),
         session.getAttribute("tel2"));
@@ -82,20 +84,34 @@ public class Controller03_2 {
   @GetMapping(value="h4", produces="text/plain;charset=UTF-8")
   @ResponseBody
   public String handler4(
-      // c03_1/h1 에서 세션에 저장한 값 꺼내기
+      // 현재 페이지 컨트롤러의 @SessionAttributes에 지정되지 않은 값 꺼내기
       // => 꺼내지 못한다. name과 age에는 빈 문자열이 저장된다.
       // => 왜?
       //    @ModelAttribute는 현재 페이지 컨트롤러의 @SessionAttributes에 
       //    지정된 이름에 한해서만 세션에서 값을 꺼내기 때문이다.
       @ModelAttribute("name") String name,
       @ModelAttribute("age") String age,
-      
-      // 현재 컨트롤러에서 세션에 저장한 값 꺼내기
+
+      // 세션에는 보관되어 있고,
+      // 현재 페이지 컨트롤러의 @SessionAttributes에 저장한 값 꺼내기
+      // => 꺼낸다.
       @ModelAttribute("name2") String name2,
-      @ModelAttribute("age2") String age2) {
+      @ModelAttribute("age2") String age2,
+
+  // 세션에 보관되어 있지 않고,
+  // 현재 페이지 컨트롤러의 @SessionAttributes에 저장되지 않은 값 꺼내기
+  @ModelAttribute("tel2") String tel2) {
+
+    // @ModelAttribute
+    // 1. @SessionAttributes에 지정된 이름인 경우
+    //    1) 무조건 HttpSession 객체에 값을 꺼내 넘긴다.
+    //       만약 없다면, 예외 발생!
+    // 2. @SessionAttribute에 지정된 이름이 아닌 경우
+    //    2) 요청 파라미터의 값을 꺼내 넘기고,
+    //    3) 없으면, 빈 문자열을 넘긴다.
     
-    return String.format("name=%s, age=%s, name2=%s, age2=%s", 
-        name, age, name2, age2);
+    return String.format("name=%s, age=%s, name2=%s, age2=%s, tel2=%s",
+        name, age, name2, age2, tel2);
   }
 
  

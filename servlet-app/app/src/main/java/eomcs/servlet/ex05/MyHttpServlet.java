@@ -1,12 +1,12 @@
-package com.eomcs.web.ex05;
+package eomcs.servlet.ex05;
 
-import java.io.IOException;
 import javax.servlet.GenericServlet;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 // 서블릿 클래스를 만들 때 HTTP 프로토콜을 쉽게 다룰 수 있도록
 // service(HttpServletRequest,HttpServletResponse) 메서드를 추가하였다.

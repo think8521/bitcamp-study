@@ -1,11 +1,11 @@
 // load on startup - 서블릿 객체 자동 생성하기(web.xml에 설정하기)
-package com.eomcs.web.ex06;
+package eomcs.servlet.ex06;
 
-import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 // 클라이언트가 실행을 요청하지 않아도 서블릿을 미리 생성하고 싶다면,
 // loadOnStartup 프로퍼티 값을 지정하라.

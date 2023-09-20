@@ -1,8 +1,6 @@
 // HTTP 프로토콜 다루기 - HttpServletRequest와 GET/POST
-package com.eomcs.web.ex05;
+package eomcs.servlet.ex05;
 
-import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.GenericServlet;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
@@ -10,6 +8,8 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 @WebServlet("/ex05/s1")
 public class Servlet01 extends GenericServlet {

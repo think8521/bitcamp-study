@@ -1,13 +1,8 @@
 // 필터 초기화 파라미터 : web.xml에서 설정한 값 가져오기
-package com.eomcs.web.ex06;
+package eomcs.servlet.ex06;
 
+import javax.servlet.*;
 import java.io.IOException;
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 
 public class Filter01 implements Filter {
 

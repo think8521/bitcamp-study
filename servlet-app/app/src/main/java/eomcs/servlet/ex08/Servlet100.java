@@ -1,13 +1,13 @@
 // 리프래시 또는 리다이렉트 최종 요청 페이지
-package com.eomcs.web.ex08;
+package eomcs.servlet.ex08;
 
-import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 @WebServlet("/ex08/s100")
 @SuppressWarnings("serial")

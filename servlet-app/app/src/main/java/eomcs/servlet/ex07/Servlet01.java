@@ -1,14 +1,14 @@
 // 포워딩(forwarding) - 서블릿 실행을 위임하기
-package com.eomcs.web.ex07;
+package eomcs.servlet.ex07;
 
-import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 @WebServlet("/ex07/s1")
 @SuppressWarnings("serial")
@@ -25,8 +25,8 @@ public class Servlet01 extends HttpServlet {
     //
     // 주의!
     // => + 연산을 수행하지 못한다.
-    // 왜? 서버에 전송될 때 '+'문자가 아닌 공백(' ')문자가 전달되기 때문이다.
-    // => + 연산자를 파라미터 값으로 보내고 싶다면 URL 인코딩 해야 한다.
+    // 왜? 서버에 '+' 문자를 전송하면 URL 디코딩할 때 '+' 문자가 공백(' ')문자로 변환되기 때문이다.
+    // => + 연산자를 파라미터 값으로 보내고 싶다면 직접 URL 인코딩 해야 한다.
     // => 왜? + 문자는 URL에서 한 칸의 공백을 의미한다.
     //    즉 getParamter("op")의 리턴 값이 공백(" ") 이다.
     // => + 문자의 URL 인코딩 값은?

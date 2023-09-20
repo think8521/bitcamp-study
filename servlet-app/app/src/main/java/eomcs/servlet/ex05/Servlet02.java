@@ -1,12 +1,12 @@
 // HTTP 프로토콜 다루기 - MyHttpServlet 클래스를 활용하기
-package com.eomcs.web.ex05;
+package eomcs.servlet.ex05;
 
-import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 @WebServlet("/ex05/s2")
 public class Servlet02 extends MyHttpServlet {

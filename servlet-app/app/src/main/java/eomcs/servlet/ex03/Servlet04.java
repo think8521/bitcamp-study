@@ -1,15 +1,11 @@
 // 클라이언트로 출력하기 - 바이너리 데이터 출력하기
-package com.eomcs.web.ex03;
+package eomcs.servlet.ex03;
 
+import javax.servlet.*;
+import javax.servlet.annotation.WebServlet;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import javax.servlet.GenericServlet;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.annotation.WebServlet;
 
 @WebServlet("/ex03/s4")
 public class Servlet04 extends GenericServlet {

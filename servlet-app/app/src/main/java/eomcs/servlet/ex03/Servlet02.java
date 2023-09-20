@@ -1,13 +1,13 @@
 // 클라이언트로 출력하기 - 한글 깨짐 현상 처리
-package com.eomcs.web.ex03;
+package eomcs.servlet.ex03;
 
-import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.GenericServlet;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 @WebServlet("/ex03/s2")
 public class Servlet02 extends GenericServlet {

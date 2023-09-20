@@ -3,10 +3,12 @@ package bitcamp.config;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-import javax.servlet.*;
+import javax.servlet.Filter;
+import javax.servlet.MultipartConfigElement;
+import javax.servlet.ServletRegistration;
 
 
-public class App1WebApplicationInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
+public class App2WebApplicationInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
   @Override
   protected Class<?>[] getRootConfigClasses() {
@@ -15,12 +17,12 @@ public class App1WebApplicationInitializer extends AbstractAnnotationConfigDispa
 
   @Override
   protected Class<?>[] getServletConfigClasses() {
-    return new Class[]{App1Config.class};
+    return new Class[]{App2Config.class};
   }
 
   @Override
   protected String[] getServletMappings() {
-    return new String[] {"/app1/*"};
+    return new String[] {"/app2/*"};
   }
 
   @Override
@@ -30,7 +32,7 @@ public class App1WebApplicationInitializer extends AbstractAnnotationConfigDispa
 
   @Override
   protected String getServletName() {
-    return "app1";
+    return "app2";
   }
 
   @Override

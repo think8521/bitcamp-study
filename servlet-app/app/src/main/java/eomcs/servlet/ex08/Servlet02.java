@@ -1,13 +1,13 @@
 // 리프래시 II - 클라이언트에게 다른 URL을 요청하라는 명령
-package com.eomcs.web.ex08;
+package eomcs.servlet.ex08;
 
-import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 @WebServlet("/ex08/s2")
 @SuppressWarnings("serial")
@@ -15,7 +15,7 @@ public class Servlet02 extends HttpServlet {
 
   @Override
   protected void service(HttpServletRequest request, HttpServletResponse response)
-      throws ServletException, IOException {
+          throws ServletException, IOException {
 
     // 테스트 방법:
     // => http://localhost:8080/java-web/ex08/s2

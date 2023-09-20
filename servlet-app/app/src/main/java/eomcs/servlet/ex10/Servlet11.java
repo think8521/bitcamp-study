@@ -1,14 +1,14 @@
 // 쿠키(cookie) - 유효기간 설정하기
-package com.eomcs.web.ex10;
+package eomcs.servlet.ex10;
 
-import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 @WebServlet("/ex10/s11")
 @SuppressWarnings("serial")
@@ -16,7 +16,7 @@ public class Servlet11 extends HttpServlet {
 
   @Override
   protected void service(HttpServletRequest request, HttpServletResponse response)
-      throws ServletException, IOException {
+          throws ServletException, IOException {
 
     // 테스트 방법:
     // => http://localhost:8080/java-web/ex10/s11

@@ -30,7 +30,7 @@ public class Controller04_3 {
 
       String maker,
 
-      @RequestParam(defaultValue = "100") int capacity, // 프론트 컨트롤러가 String 값을 int로 변환해 준다.
+      @RequestParam(defaultValue = "5") int capacity, // 프론트 컨트롤러가 String 값을 int로 변환해 준다.
       // 단 변환할 수 없을 경우 예외가 발생한다.
 
       boolean auto,

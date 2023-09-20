@@ -508,3 +508,9 @@ gradle-app.setting
 *.hprof
 
 # End of https://www.toptal.com/developers/gitignore/api/gradle,maven,c++,java,eclipse,windows,macos,visualstudiocode,intellij,node
+
+*.exe
+node_modules/
+temp/
+
+*.properties

@@ -1,15 +1,15 @@
 // 받은 쿠키(cookie) 읽기
-package com.eomcs.web.ex10;
+package eomcs.servlet.ex10;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.net.URLDecoder;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.URLDecoder;
 
 @WebServlet("/ex10/s2")
 @SuppressWarnings("serial")
@@ -17,7 +17,7 @@ public class Servlet02 extends HttpServlet {
 
   @Override
   protected void service(HttpServletRequest request, HttpServletResponse response)
-      throws ServletException, IOException {
+          throws ServletException, IOException {
 
     // 테스트 방법:
     // => http://localhost:8080/java-web/ex10/s2
@@ -42,7 +42,7 @@ public class Servlet02 extends HttpServlet {
     // => 따라서 무조건 반복문을 돌리면 안된다.
     //
     Cookie[] cookies = request.getCookies();
-
+    
     response.setContentType("text/plain;charset=UTF-8");
     PrintWriter out = response.getWriter();
 
@@ -52,9 +52,9 @@ public class Servlet02 extends HttpServlet {
         // 개발자가 직접 디코딩 해서 사용해야 한다.
         // 쿠키 값에 대해서는 서버가 자동으로 디코딩 해주지 않는다.
         out.printf("%s=%s,%s\n",
-            c.getName(),
-            c.getValue(),
-            URLDecoder.decode(c.getValue(), "UTF-8"));
+                c.getName(),
+                c.getValue(),
+                URLDecoder.decode(c.getValue(), "UTF-8"));
       }
     }
 

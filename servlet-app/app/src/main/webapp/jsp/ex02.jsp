@@ -9,6 +9,7 @@
 </head>
 <body>
 <h1>템플릿 데이터(template data)</h1>
+<%--ohorrrrra--%>
 <pre>
 - JSP 파일에 그냥 작성하는 텍스트는 자바 출력 코드를 생성한다.
 - 예) 

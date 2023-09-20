@@ -1,14 +1,14 @@
 // 세션(session)
-package com.eomcs.web.ex11;
+package eomcs.servlet.ex11;
 
-import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 @WebServlet("/ex11/s1")
 @SuppressWarnings("serial")
@@ -16,7 +16,7 @@ public class Servlet01 extends HttpServlet {
 
   @Override
   protected void service(HttpServletRequest request, HttpServletResponse response)
-      throws ServletException, IOException {
+          throws ServletException, IOException {
 
     // 테스트 방법:
     // => http://localhost:8080/java-web/ex11/s1
@@ -34,9 +34,9 @@ public class Servlet01 extends HttpServlet {
     // => 웹 브라우저는 세션 아이디를 쿠키에 보관해 두었다가
     //    그 서버에 요청할 때 마다 세션 아이디를 보낸다.
     //    왜? 세션 아이디는 쿠키이다.
-    // => 세션 아이디를 쿠키로 보낼 때 유효기간을 설정하지 않았기 때문에
-    //    웹 브라우저를 종료하면 세션 아이디 쿠키는 삭제된다.
-    // => 세션 아이디 쿠키의 사용 범위는 웹 애플리케이션이다.
+    // => 서버에서 클라이언트로 세션 아이디를 쿠키로 보낼 때 유효기간을 설정하지 않기 때문에
+    //    웹 브라우저를 종료하면 세션 아이디 쿠키는 자동 삭제된다.
+    // => 세션 아이디 쿠키의 사용 범위는 웹 애플리케이션 경로에 한정한다.
     //    예) /eomcs-java-web
     //    따라서 같은 웹 애플리케이션의 서블릿을 실행할 때는
     //    무조건 세션 아이디를 보낸다.

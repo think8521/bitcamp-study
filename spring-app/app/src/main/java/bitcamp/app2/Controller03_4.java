@@ -1,82 +1,94 @@
-// 세션 다루기 - 세션의 값을 무효화시키는 방법
+// 세션 다루기 - @SessionAttributes를 사용하는 예
 package bitcamp.app2;
 
-import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 
+import javax.servlet.http.HttpSession;
+
 @Controller
-@RequestMapping("/c03_3")
+@RequestMapping("/c03_4")
 
 // 세션에 보관된 값 중에서 현재 페이지 컨트롤러에서 사용할 값을 지정한다.
 // 또한 세션에 보관할 값이기도 하다.
-@SessionAttributes({"name", "name2"})
-public class Controller03_3 {
-
+@SessionAttributes({"name", "age", "tel"})
+public class Controller03_4 {
+HttpSession session;
   // 테스트:
-  // http://.../app2/c03_3/h1
-  @GetMapping(value = "h1", produces = "text/plain;charset=UTF-8")
+  // http://.../app2/c03_4/step0
+  @GetMapping(value = "step0", produces = "text/plain;charset=UTF-8")
   @ResponseBody
-  public String handler1(HttpSession session) {
-    return String.format("name=%s, age=%s, name2=%s, age2=%s",
-        session.getAttribute("name"),
-        session.getAttribute("age"),
-        session.getAttribute("name2"),
-        session.getAttribute("age2"));
+  public String step0(HttpSession session) {
+    // 프론트 컨트롤러에게 HttpSession을 요구하면
+    // 기존에 만든게 있다면 그 객체를 넘겨 줄 것이고,
+    // 없다면 새로 만들어 넘겨 줄 것이다.
+    // 어찌 됐든 이 요청 핸들러를 실행하는 순간 HttpSession 객체가 존재한다.
+    // 보통 로그인 과정에서 HttpSession 객체가 준비될 것이고,
+    // 그 전에 JSP를 실행하는 과정에서 HttpSession 객체가 생성될 것이다.
+    // 따라서 이 메서드처럼 일부러 HttpSession 객체를 만들게 할 필요는 없다.
+    // 다만 @SessionAttributes와 @ModelAttribute를 테스트하기 위해
+    // 예제를 실행하는 과정에서 HttpSession 객체를 미리 준비할 필요가 있기 때문에
+    // 억지로 이 메서드를 만든 것이다.
+    // 이 메서드를 먼저 실행하여 HttpSession 객체를 준비한 후에 step1, 2, 3, 4를 테스트하라!
+
+
+    return "세션 준비했음!";
   }
 
   // 테스트:
-  // http://.../app2/c03_3/h2
-  @GetMapping(value = "h2", produces = "text/plain;charset=UTF-8")
+  // http://.../app2/c03_4/step1?name=hong
+  @GetMapping(value = "step1", produces = "text/plain;charset=UTF-8")
+  @ResponseBody
+  public String step1(Model model, String name) {
+    model.addAttribute("name", name);
+    return "이름 저장했음!";
+  }
+
+  // 테스트:
+  // http://.../app2/c03_4/step2?age=20
+  @GetMapping(value = "step2", produces = "text/plain;charset=UTF-8")
+  @ResponseBody
+  public String step2(int age, Model model) {
+    model.addAttribute("age", age);
+    return "나이 저장했음!";
+  }
+
+
+  // 테스트:
+  // http://.../app2/c03_4/step3?tel=1111
+  @GetMapping(value = "step3", produces = "text/plain;charset=UTF-8")
+  @ResponseBody
+  public String step3(String tel, Model model) {
+    model.addAttribute("tel", tel);
+    return "전화번호 저장했음!";
+  }
+
+  // 테스트:
+  // http://.../app2/c03_4/step4
+  @GetMapping(value = "step4", produces = "text/plain;charset=UTF-8")
+  @ResponseBody
+  public String step4(
+          @ModelAttribute("name") String name,
+          @ModelAttribute("age") int age,
+          @ModelAttribute("tel") String tel,
+          SessionStatus status) {
+
+    // 이 페이지 컨트롤러가 작업을 하는 동안 세션에 임시 보관했던 값들은
+    // 예를 들어, "DB에 저장한 후" 세션에서 제거한다.
+    status.setComplete();
+
+    return String.format("이름=%s, 나이=%d, 전화번호=%s 를 DB에 저장했음!\n", name, age, tel);
+  }
+
+  @GetMapping(value="test", produces="text/plain;charset=UTF-8")
   @ResponseBody
   public String handler2(HttpSession session) {
-    // 세션을 완전히 무효화시키기
-    session.invalidate();
-    // 용도:
-    // => 페이지 컨트롤러에 상관없이 모든 세션 값을 삭제할 때 사용하라.
-    // 세션 자체를 무효화시켜 다음에 요청이 들어 왔을 때 새로 세션을 만들게 한다.
-    //
-    return "session.invalidate()";
-  }
-
-  // 테스트:
-  // http://.../app2/c03_3/h3
-  @GetMapping(value = "h3", produces = "text/plain;charset=UTF-8")
-  @ResponseBody
-  public String handler3(SessionStatus status) {
-    // 현재 페이지 컨트롤러의 @SessionAttributes 에 지정된 값만 무효화시키기
-    status.setComplete();
-    // 용도:
-    // => 보통 페이지 컨트롤러는 서로 관련된 작업을 처리하는 요청 핸들러를 정의한다.
-    //    예) BoardController : add(), detail(), list(), update(), delete()
-    // => 또는 트랜잭션과 관련된 작업을 처리하는 요청 핸들러를 두기도 한다.
-    //    예) BookOrderController: 장바구니담기(), 주문하기(), 결제하기()
-    // => 이렇게 특정 작업에 관계된 요청 핸들러가 작업하는 동안
-    //    공유할 데이터가 있다면 세션에 보관하면 편할 것이다.
-    //    작업이 완료되면 그 작업을 처리하는 동안 세션에 보관했던 데이터는 삭제해야 한다.
-    //    세션의 모든 데이터가 아니라
-    //    현재 페이지 컨트롤러가 보관한 데이터만 삭제하고 싶을 때
-    //    바로 이 방식으로 처리하면 된다.
-    // => 즉 세션을 그대로 유지한채로 이 페이지 컨트롤러에서
-    // @SessionAttributes로 지정한 값만 무효화시킬 때 사용한다.
-    return "status.setComplete()";
-  }
-
-  @GetMapping(value="h4", produces="text/plain;charset=UTF-8")
-  @ResponseBody
-  public String handler4(
-      @ModelAttribute("name") String name,
-      @ModelAttribute("age") String age,
-      @ModelAttribute("name2") String name2,
-      @ModelAttribute("age2") String age2) {
-
-    return String.format("name=%s, age=%s, name2=%s, age2=%s",
-        name, age, name2, age2);
+    return String.format("name=%s, age=%s, tel=%s",
+            session.getAttribute("name"),
+            session.getAttribute("age"),
+            session.getAttribute("tel"));
   }
 
 }

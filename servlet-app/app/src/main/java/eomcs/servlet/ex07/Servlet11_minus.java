@@ -1,13 +1,13 @@
 // 인클루딩(forwarding) - 다른 서블릿의 실행을 포함시키기
-package com.eomcs.web.ex07;
+package eomcs.servlet.ex07;
 
-import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 @WebServlet("/ex07/s11_minus")
 @SuppressWarnings("serial")

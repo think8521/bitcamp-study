@@ -1,13 +1,13 @@
 // 클라이언트로 출력하기 - HTML 출력하기
-package com.eomcs.web.ex03;
+package eomcs.servlet.ex03;
 
-import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.GenericServlet;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 @WebServlet("/ex03/s3")
 public class Servlet03 extends GenericServlet {
@@ -26,7 +26,7 @@ public class Servlet03 extends GenericServlet {
     out.println("<!DOCTYPE html>");
     out.println("<html>");
     out.println("<head><title>servlet03</title></head>");
-    out.println("<body><h1>안녕하세요</h1></body>");
+    out.println("<body><h1>안녕하세요2</h1></body>");
     out.println("</html>");
   }
 }

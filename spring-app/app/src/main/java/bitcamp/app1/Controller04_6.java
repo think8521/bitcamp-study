@@ -31,6 +31,8 @@ public class Controller04_6 {
 
     if (userAgent.matches(".*Edg.*")) {
       out.println("Edge");
+    } else if (userAgent.matches(".*Whale.*")) {
+      out.println("Whale");
     } else if (userAgent.matches(".*Chrome.*")) {
       out.println("chrome");
     } else if (userAgent.matches(".*Safari.*")) {

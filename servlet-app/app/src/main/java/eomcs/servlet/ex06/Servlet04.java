@@ -1,5 +1,5 @@
 // 서블릿 초기화 파라미터 - web.xml에서 설정하기
-package com.eomcs.web.ex06;
+package eomcs.servlet.ex06;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;

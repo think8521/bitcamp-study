@@ -1,13 +1,13 @@
 // 리다이렉트 - 응답할 때 콘텐트를 보내지 않는다. 바로 다른 페이지를 요청하라고 명령한다.
-package com.eomcs.web.ex08;
+package eomcs.servlet.ex08;
 
-import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 @WebServlet("/ex08/s3")
 @SuppressWarnings("serial")
@@ -15,7 +15,7 @@ public class Servlet03 extends HttpServlet {
 
   @Override
   protected void service(HttpServletRequest request, HttpServletResponse response)
-      throws ServletException, IOException {
+          throws ServletException, IOException {
 
     // 테스트 방법:
     // => http://localhost:8080/java-web/ex08/s2
@@ -54,7 +54,7 @@ public class Servlet03 extends HttpServlet {
     // 이미 클라이언트로 출력을 완료했는데 어떻게 응답헤더를 보내는가?
     // 다음 반복문 주석을 풀라!
     for (int i = 0; i < 1000; i++) {
-      out.println("안녕하세요! - /ex08/s3<br>");
+      //out.println("안녕하세요! - /ex08/s3<br>");
     }
     out.println("</body></html>");
 

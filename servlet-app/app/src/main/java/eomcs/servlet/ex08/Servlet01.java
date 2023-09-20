@@ -1,13 +1,13 @@
 // 리프래시 - 클라이언트에게 다른 URL을 요청하라는 명령
-package com.eomcs.web.ex08;
+package eomcs.servlet.ex08;
 
-import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 @WebServlet("/ex08/s1")
 @SuppressWarnings("serial")
@@ -65,10 +65,10 @@ public class Servlet01 extends HttpServlet {
       // 즉 반복문 다음에 헤더를 설정하기 전에 이미 버퍼 내용이 출력된다.
       // 응답이 완료된 후에 응답 헤더의 값을 변경하거나 추가해봐야 소용없다.
       //
-      out.println(i + " ===> 1234567890123456789012345678901234567890");
+//      out.println(i + " ===> 1234567890123456789012345678901234567890");
     }
 
-    response.setHeader("Refresh", "3;url=s100");
+    response.setHeader("Refresh", "3;url=/ex08/s100");
 
     // 이 service() 메서드의 호출이 끝나면
     // 비로서 응답 프로토콜에 맞춰

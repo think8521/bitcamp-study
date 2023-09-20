@@ -1,4 +1,4 @@
-package com.eomcs.web.vo;
+package eomcs.vo;
 
 import java.io.Serializable;
 import java.sql.Date;
@@ -16,7 +16,7 @@ public class Board implements Serializable {
   @Override
   public String toString() {
     return "Board [no=" + no + ", contents=" + contents + ", createdDate=" + createdDate
-        + ", viewCount=" + viewCount + ", writer=" + writer + "]";
+            + ", viewCount=" + viewCount + ", writer=" + writer + "]";
   }
 
   public int getNo() {
@@ -58,7 +58,6 @@ public class Board implements Serializable {
   public void setWriter(String writer) {
     this.writer = writer;
   }
-
 
 
 }

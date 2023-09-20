@@ -1,13 +1,13 @@
 // 클라이언트로 출력하기
-package com.eomcs.web.ex03;
+package eomcs.servlet.ex03;
 
-import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.GenericServlet;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 @WebServlet("/ex03/s1") // http://localhost:8080/web/ex03/s1
 public class Servlet01 extends GenericServlet {

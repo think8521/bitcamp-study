@@ -1,14 +1,14 @@
 // 쿠키(cookie) - 쿠키 사용 범위 지정하기
-package com.eomcs.web.ex10;
+package eomcs.servlet.ex10;
 
-import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 @WebServlet("/ex10/s21")
 @SuppressWarnings("serial")
@@ -16,7 +16,7 @@ public class Servlet21 extends HttpServlet {
 
   @Override
   protected void service(HttpServletRequest request, HttpServletResponse response)
-      throws ServletException, IOException {
+          throws ServletException, IOException {
 
     // 테스트 방법:
     // => http://localhost:8080/java-web/ex10/s21
@@ -51,10 +51,10 @@ public class Servlet21 extends HttpServlet {
     // => 쿠키를 발급한 서블릿의 경로에 상관없이 지정된 경로의 서블릿을 요청할 때
     // 웹 브라우저가 서버에 쿠키를 보낸다.
     Cookie c2 = new Cookie("v2", "bbb");
-    c2.setPath("/web/ex10/a");
+    c2.setPath("/ex10/a");
 
     Cookie c3 = new Cookie("v3", "ccc");
-    c3.setPath("/web");
+    c3.setPath("/");
 
     // 어~ 왜 쿠키의 경로를 적을 때 웹 애플리케이션 루트(컨텍스트 루트)까지 적나요?
     // => 쿠키 경로는 서블릿 컨테이너가 사용하는 경로가 아니다.

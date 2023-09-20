@@ -1,4 +1,4 @@
-package com.eomcs.web.vo;
+package eomcs.vo;
 
 import java.io.Serializable;
 import java.sql.Date;
@@ -15,12 +15,6 @@ public class Member implements Serializable {
   private String tel;
   private Date registeredDate;
 
-  @Override
-  public String toString() {
-    return "Member [no=" + no + ", name=" + name + ", email=" + email + ", password=" + password
-        + ", photo=" + photo + ", tel=" + tel + ", registeredDate=" + registeredDate + "]";
-  }
-
   public static Member valueOf(String csv) {
     String[] data = csv.split(",");
 
@@ -36,9 +30,15 @@ public class Member implements Serializable {
     return member;
   }
 
+  @Override
+  public String toString() {
+    return "Member [no=" + no + ", name=" + name + ", email=" + email + ", password=" + password
+            + ", photo=" + photo + ", tel=" + tel + ", registeredDate=" + registeredDate + "]";
+  }
+
   public String toCsvString() {
     return String.format("%d,%s,%s,%s,%s,%s,%s", this.getNo(), this.getName(), this.getEmail(),
-        this.getPassword(), this.getPhoto(), this.getTel(), this.getRegisteredDate());
+            this.getPassword(), this.getPhoto(), this.getTel(), this.getRegisteredDate());
   }
 
 
